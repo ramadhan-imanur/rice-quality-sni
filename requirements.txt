@@ -1,0 +1,7 @@
+# Dependensi Perangkat Lunak Penilai Mutu Beras SNI 6128:2020
+# Pustaka Standar Python 3.8+ (Zero External Dependencies)
+#
+# Seluruh modul dirancang 100% menggunakan pustaka bawaan Python:
+# - os, sys, json, math, time, tracemalloc, datetime, uuid, argparse, unittest
+#
+# Tidak ada pustaka pihak ketiga (pip) yang wajib diinstal.

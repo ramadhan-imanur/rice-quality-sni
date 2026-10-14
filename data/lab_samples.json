@@ -1,0 +1,372 @@
+[
+  {
+    "nomor_sertifikat": "SNI-20261013-KAS001",
+    "sample_id": "KAS-01: Beras Premium Super",
+    "tanggal_uji": "13 Oktober 2026, 08:30:00 WIB",
+    "tanggal_iso": "2026-10-13T08:30:00",
+    "parameter_uji": {
+      "kadar_air": 13.2,
+      "butir_patah": 11.5,
+      "butir_menir": 0.35,
+      "benda_asing": 0.008
+    },
+    "klasifikasi": {
+      "kelas_mutu": "PREMIUM",
+      "label_mutu": "Premium",
+      "batas_toleransi": {
+        "kadar_air_maks": 14.0,
+        "butir_patah_maks": 15.0,
+        "butir_menir_maks": 0.5,
+        "benda_asing_maks": 0.01
+      },
+      "deviasi": []
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 15800,
+      "kelebihan_kadar_air": 0.0,
+      "penalti_pengeringan": 0.0,
+      "potongan_penyusutan": 0.0,
+      "total_potongan": 0.0,
+      "harga_bersih": 15800.0,
+      "rincian_penalti": []
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  },
+  {
+    "nomor_sertifikat": "SNI-20261013-KAS002",
+    "sample_id": "KAS-02: Batas Toleransi Premium",
+    "tanggal_uji": "13 Oktober 2026, 09:15:00 WIB",
+    "tanggal_iso": "2026-10-13T09:15:00",
+    "parameter_uji": {
+      "kadar_air": 14.0,
+      "butir_patah": 15.0,
+      "butir_menir": 0.5,
+      "benda_asing": 0.01
+    },
+    "klasifikasi": {
+      "kelas_mutu": "PREMIUM",
+      "label_mutu": "Premium",
+      "batas_toleransi": {
+        "kadar_air_maks": 14.0,
+        "butir_patah_maks": 15.0,
+        "butir_menir_maks": 0.5,
+        "benda_asing_maks": 0.01
+      },
+      "deviasi": []
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 15800,
+      "kelebihan_kadar_air": 0.0,
+      "penalti_pengeringan": 0.0,
+      "potongan_penyusutan": 0.0,
+      "total_potongan": 0.0,
+      "harga_bersih": 15800.0,
+      "rincian_penalti": []
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  },
+  {
+    "nomor_sertifikat": "SNI-20261013-KAS003",
+    "sample_id": "KAS-03: Beras Medium I Standar",
+    "tanggal_uji": "13 Oktober 2026, 10:00:00 WIB",
+    "tanggal_iso": "2026-10-13T10:00:00",
+    "parameter_uji": {
+      "kadar_air": 13.8,
+      "butir_patah": 18.0,
+      "butir_menir": 1.5,
+      "benda_asing": 0.015
+    },
+    "klasifikasi": {
+      "kelas_mutu": "MEDIUM_I",
+      "label_mutu": "Medium I",
+      "batas_toleransi": {
+        "kadar_air_maks": 14.0,
+        "butir_patah_maks": 20.0,
+        "butir_menir_maks": 2.0,
+        "benda_asing_maks": 0.02
+      },
+      "deviasi": []
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 13500,
+      "kelebihan_kadar_air": 0.0,
+      "penalti_pengeringan": 0.0,
+      "potongan_penyusutan": 0.0,
+      "total_potongan": 0.0,
+      "harga_bersih": 13500.0,
+      "rincian_penalti": []
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  },
+  {
+    "nomor_sertifikat": "SNI-20261013-KAS004",
+    "sample_id": "KAS-04: Beras Medium II Pasar",
+    "tanggal_uji": "13 Oktober 2026, 10:45:00 WIB",
+    "tanggal_iso": "2026-10-13T10:45:00",
+    "parameter_uji": {
+      "kadar_air": 14.0,
+      "butir_patah": 23.5,
+      "butir_menir": 3.8,
+      "benda_asing": 0.035
+    },
+    "klasifikasi": {
+      "kelas_mutu": "MEDIUM_II",
+      "label_mutu": "Medium II",
+      "batas_toleransi": {
+        "kadar_air_maks": 14.0,
+        "butir_patah_maks": 25.0,
+        "butir_menir_maks": 5.0,
+        "benda_asing_maks": 0.05
+      },
+      "deviasi": []
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 13500,
+      "kelebihan_kadar_air": 0.0,
+      "penalti_pengeringan": 0.0,
+      "potongan_penyusutan": 0.0,
+      "total_potongan": 0.0,
+      "harga_bersih": 13500.0,
+      "rincian_penalti": []
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  },
+  {
+    "nomor_sertifikat": "SNI-20261013-KAS005",
+    "sample_id": "KAS-05: Beras Basah Perlu Pengeringan",
+    "tanggal_uji": "13 Oktober 2026, 11:20:00 WIB",
+    "tanggal_iso": "2026-10-13T11:20:00",
+    "parameter_uji": {
+      "kadar_air": 16.5,
+      "butir_patah": 18.0,
+      "butir_menir": 1.2,
+      "benda_asing": 0.015
+    },
+    "klasifikasi": {
+      "kelas_mutu": "SUBSTANDAR",
+      "label_mutu": "Substandar",
+      "batas_toleransi": {
+        "kadar_air_maks": 99.0,
+        "butir_patah_maks": 100.0,
+        "butir_menir_maks": 100.0,
+        "benda_asing_maks": 100.0
+      },
+      "deviasi": [
+        {
+          "parameter": "Kadar Air",
+          "nilai_uji": 16.5,
+          "batas_toleransi": 14.0,
+          "kelebihan": 2.5
+        }
+      ]
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 11500,
+      "kelebihan_kadar_air": 2.5,
+      "penalti_pengeringan": 375.0,
+      "potongan_penyusutan": 431.25,
+      "total_potongan": 806.25,
+      "harga_bersih": 10693.75,
+      "rincian_penalti": [
+        "Kelebihan kadar air 2.5%: biaya pengeringan Rp 375/kg",
+        "Penyusutan berat 2.5% × 1.5% × Rp 11,500: Rp 431/kg"
+      ]
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  },
+  {
+    "nomor_sertifikat": "SNI-20261013-122B70",
+    "sample_id": "Sampel Test CLI",
+    "tanggal_uji": "13 October 2026, 11:34:24 WIB",
+    "tanggal_iso": "2026-10-13T11:34:24.286161",
+    "parameter_uji": {
+      "kadar_air": 13.5,
+      "butir_patah": 14.0,
+      "butir_menir": 0.4,
+      "benda_asing": 0.008
+    },
+    "klasifikasi": {
+      "kelas_mutu": "PREMIUM",
+      "label_mutu": "Premium",
+      "batas_toleransi": {
+        "kadar_air_maks": 14.0,
+        "butir_patah_maks": 15.0,
+        "butir_menir_maks": 0.5,
+        "benda_asing_maks": 0.01
+      },
+      "deviasi": []
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 15800,
+      "kelebihan_kadar_air": 0.0,
+      "penalti_pengeringan": 0.0,
+      "potongan_penyusutan": 0.0,
+      "total_potongan": 0.0,
+      "harga_bersih": 15800.0,
+      "rincian_penalti": []
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  },
+  {
+    "nomor_sertifikat": "SNI-20261013-5AA975",
+    "sample_id": "Uji-Integrasi-Otomatis",
+    "tanggal_uji": "13 October 2026, 11:37:22 WIB",
+    "tanggal_iso": "2026-10-13T11:37:22.708193",
+    "parameter_uji": {
+      "kadar_air": 13.5,
+      "butir_patah": 14.0,
+      "butir_menir": 0.4,
+      "benda_asing": 0.008
+    },
+    "klasifikasi": {
+      "kelas_mutu": "PREMIUM",
+      "label_mutu": "Premium",
+      "batas_toleransi": {
+        "kadar_air_maks": 14.0,
+        "butir_patah_maks": 15.0,
+        "butir_menir_maks": 0.5,
+        "benda_asing_maks": 0.01
+      },
+      "deviasi": []
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 15800,
+      "kelebihan_kadar_air": 0.0,
+      "penalti_pengeringan": 0.0,
+      "potongan_penyusutan": 0.0,
+      "total_potongan": 0.0,
+      "harga_bersih": 15800.0,
+      "rincian_penalti": []
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  },
+  {
+    "nomor_sertifikat": "SNI-20261013-5934E0",
+    "sample_id": "Uji-Integrasi-Otomatis",
+    "tanggal_uji": "13 October 2026, 11:38:38 WIB",
+    "tanggal_iso": "2026-10-13T11:38:38.948501",
+    "parameter_uji": {
+      "kadar_air": 13.5,
+      "butir_patah": 14.0,
+      "butir_menir": 0.4,
+      "benda_asing": 0.008
+    },
+    "klasifikasi": {
+      "kelas_mutu": "PREMIUM",
+      "label_mutu": "Premium",
+      "batas_toleransi": {
+        "kadar_air_maks": 14.0,
+        "butir_patah_maks": 15.0,
+        "butir_menir_maks": 0.5,
+        "benda_asing_maks": 0.01
+      },
+      "deviasi": []
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 15800,
+      "kelebihan_kadar_air": 0.0,
+      "penalti_pengeringan": 0.0,
+      "potongan_penyusutan": 0.0,
+      "total_potongan": 0.0,
+      "harga_bersih": 15800.0,
+      "rincian_penalti": []
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  },
+  {
+    "nomor_sertifikat": "SNI-20261014-FE5E4C",
+    "sample_id": "Uji-Integrasi-Otomatis",
+    "tanggal_uji": "14 October 2026, 15:54:29 WIB",
+    "tanggal_iso": "2026-10-14T15:54:29.272624",
+    "parameter_uji": {
+      "kadar_air": 13.5,
+      "butir_patah": 14.0,
+      "butir_menir": 0.4,
+      "benda_asing": 0.008
+    },
+    "klasifikasi": {
+      "kelas_mutu": "PREMIUM",
+      "label_mutu": "Premium",
+      "batas_toleransi": {
+        "kadar_air_maks": 14.0,
+        "butir_patah_maks": 15.0,
+        "butir_menir_maks": 0.5,
+        "benda_asing_maks": 0.01
+      },
+      "deviasi": []
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 15800,
+      "kelebihan_kadar_air": 0.0,
+      "penalti_pengeringan": 0.0,
+      "potongan_penyusutan": 0.0,
+      "total_potongan": 0.0,
+      "harga_bersih": 15800.0,
+      "rincian_penalti": []
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  },
+  {
+    "nomor_sertifikat": "SNI-20261014-7A87F4",
+    "sample_id": "Uji-Integrasi-Otomatis",
+    "tanggal_uji": "14 October 2026, 15:59:19 WIB",
+    "tanggal_iso": "2026-10-14T15:59:19.613781",
+    "parameter_uji": {
+      "kadar_air": 13.5,
+      "butir_patah": 14.0,
+      "butir_menir": 0.4,
+      "benda_asing": 0.008
+    },
+    "klasifikasi": {
+      "kelas_mutu": "PREMIUM",
+      "label_mutu": "Premium",
+      "batas_toleransi": {
+        "kadar_air_maks": 14.0,
+        "butir_patah_maks": 15.0,
+        "butir_menir_maks": 0.5,
+        "benda_asing_maks": 0.01
+      },
+      "deviasi": []
+    },
+    "rekomendasi_harga": {
+      "harga_dasar": 15800,
+      "kelebihan_kadar_air": 0.0,
+      "penalti_pengeringan": 0.0,
+      "potongan_penyusutan": 0.0,
+      "total_potongan": 0.0,
+      "harga_bersih": 15800.0,
+      "rincian_penalti": []
+    },
+    "referensi_regulasi": {
+      "standar_mutu": "SNI 6128:2020 (BSN)",
+      "acuan_harga": "Peraturan Bapanas No. 67/2024"
+    }
+  }
+]
