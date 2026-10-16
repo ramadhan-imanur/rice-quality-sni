@@ -392,18 +392,20 @@ def evaluate_sample(
     grade = hasil_klasifikasi["kelas_mutu"]
     hasil_harga = calculate_price(ka, grade)
 
-    # Nomor sertifikat unik
+    # Nomor dokumen taksasi unik (TKS-YYYYMMDD-XXXXXX)
     tanggal_str = datetime.now().strftime("%Y%m%d")
     kode_unik = uuid.uuid4().hex[:6].upper()
-    nomor_sertifikat = f"SNI-{tanggal_str}-{kode_unik}"
+    nomor_taksasi = f"TKS-{tanggal_str}-{kode_unik}"
 
     if sample_id is None:
         sample_id = f"SAMPEL-{kode_unik}"
 
     return {
-        "nomor_sertifikat": nomor_sertifikat,
+        "nomor_taksasi": nomor_taksasi,
+        "nomor_sertifikat": nomor_taksasi,  # Kompatibilitas mundur
         "sample_id": sample_id,
         "tanggal_uji": datetime.now().strftime("%d %B %Y, %H:%M:%S WIB"),
+        "tanggal_taksasi": datetime.now().strftime("%d %B %Y, %H:%M:%S WIB"),
         "tanggal_iso": datetime.now().isoformat(),
         "parameter_uji": {
             "kadar_air": ka,

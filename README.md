@@ -56,23 +56,31 @@ Sistem beroperasi **100% luring (*offline-first*)**, tanpa dependensi pustaka pi
 ```text
 rice-quality-sni/
 ├── quality_engine.py         # Modul inti Python: validasi, klasifikasi SNI, kalkulasi harga Bapanas
-├── pdf_generator.py          # Generator sertifikat digital PDF A4 (raw PDF 1.4 murni)
+├── cv_engine.py              # Mesin Computer Vision: segmentasi Otsu, tensor inersia orde-2, klasifikasi butir
+├── database.py               # Lapisan persistensi SQLite (Users, Submissions, Certificates, Audit Logs) & HMAC
+├── qr_codec.py               # Generator matriks QR Code ISO/IEC 18004 murni (Zero External Dependencies)
+├── pdf_generator.py          # Generator Lembar Taksasi Mutu PDF A4 (QR vektor, segel HMAC, watermark, disclaimer UU)
+├── api_server.py             # Peladen REST API & Backend Maker-Checker + Computer Vision (Pustaka Standar Python)
 ├── cli.py                    # Antarmuka CLI interaktif & otomasi terminal
 ├── benchmark_performance.py  # Skrip tolok ukur latensi, alokasi heap RAM, dan ukuran berkas
-├── run_tests.sh              # Skrip runner otomatis untuk seluruh pengujian unit & benchmark
-├── requirements.txt          # Spesifikasi dependensi (hanya pustaka standar Python)
+├── run_tests.sh              # Skrip runner otomatis untuk seluruh 32 pengujian unit & benchmark
+├── requirements.txt          # Spesifikasi dependensi (Pustaka Standar Python 3.8+ / Pillow, NumPy, SciPy untuk CV)
 ├── LICENSE                   # Lisensi sumber terbuka MIT
 ├── data/
+│   ├── rice_sni.db           # Basis data SQLite terpusat untuk integritas lembar taksasi
 │   └── lab_samples.json      # Basis data riwayat pengujian sampel format JSON
 ├── output/
-│   └── .gitkeep              # Direktori keluaran berkas sertifikat PDF lokal
+│   └── .gitkeep              # Direktori keluaran berkas PDF taksasi lokal & label pengantar
 ├── tests/
 │   ├── __init__.py
-│   └── test_quality_engine.py # 20 skenario unit test kasus batas toleransi
-└── web/                      # Antarmuka web statis luring (< 60 KB)
-    ├── index.html            # Struktur formulir, template sertifikat cetak A4 & slot iklan
-    ├── style.css             # Desain antarmuka & stylesheet cetak A4 (@media print)
-    └── app.js                # Logika klasifikasi klien & manajemen riwayat localStorage
+│   ├── test_quality_engine.py # 20 skenario unit test kasus batas toleransi SNI
+│   ├── test_maker_checker.py  # 6 skenario unit test arsitektur Maker-Checker & Anti-Fraud
+│   └── test_cv_engine.py      # 6 skenario unit test Computer Vision & tensor inersia
+└── web/                      # Antarmuka web responsif (< 85 KB)
+    ├── index.html            # Portal 4-Tab: Simulasi + CV, Maker Petani, Checker Lab, Bank Taksasi
+    ├── verify.html           # Portal publik verifikasi keaslian dokumen taksasi via QR Code / HMAC
+    ├── style.css             # Desain UI, deteksi CV preview, traffic-light gauges, & stylesheet cetak A4
+    └── app.js                # Pengendali kamera CV, tab, REST API fetch, & visualisasi interaktif
 ```
 
 ---
@@ -125,17 +133,18 @@ Melihat riwayat pengujian lokal:
 python3 cli.py --history
 ```
 
-### 2. Antarmuka Web Luring (`web/`)
+### 2. Antarmuka Web & Peladen REST API (`api_server.py` & `web/`)
 
-Aplikasi web dapat dibuka langsung tanpa koneksi internet dan tanpa web server:
+Jalankan peladen REST API terpadu (menyajikan antarmuka Maker-Checker, database SQLite, dan endpoint verifikasi publik):
 ```bash
-# Opsi A: Buka berkas HTML langsung di peramban bawaan
-xdg-open web/index.html
-
-# Opsi B: Jalankan web server lokal bawaan Python
-python3 -m http.server 8080 --directory web
-# Akses melalui: http://localhost:8080
+# Jalankan peladen resmi backend + web
+python3 api_server.py
 ```
+Akses melalui peramban:
+- **Aplikasi Utama (Maker-Checker & Simulasi):** `http://localhost:8000/`
+- **Portal Cek Keaslian Publik (Anti-Fraud Verifier):** `http://localhost:8000/verify.html`
+
+*Aplikasi web juga tetap dapat berjalan 100% luring mandiri tanpa server cukup dengan membuka berkas `web/index.html` langsung di peramban.*
 
 **Fitur Cetak Sertifikat A4:**  
 Setelah memasukkan parameter dan menekan tombol *Evaluasi Mutu*, tekan tombol **Cetak / Simpan Sertifikat Resmi PDF (A4)** atau tekan tombol `Ctrl + P` pada keyboard peramban untuk mencetak lembar sertifikat resmi atau menyimpannya sebagai file PDF.

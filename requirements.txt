@@ -1,7 +1,13 @@
-# Dependensi Perangkat Lunak Penilai Mutu Beras SNI 6128:2020
-# Pustaka Standar Python 3.8+ (Zero External Dependencies)
+# Dependensi Perangkat Lunak Penilai Mutu Beras SNI 6128:2020 & Taksasi Harga
+# ==============================================================================
+# 1. Modul Inti & Engine Taksasi (quality_engine, pdf_generator, database, cli):
+#    100% Pustaka Standar Python 3.8+ (Zero External Dependencies)
+#    - os, sys, json, math, time, tracemalloc, datetime, uuid, argparse, unittest, sqlite3, hmac, hashlib
+#    Tidak memerlukan 'pip install' sama sekali untuk menjalankan mesin taksasi, sertifikasi, & basis data.
 #
-# Seluruh modul dirancang 100% menggunakan pustaka bawaan Python:
-# - os, sys, json, math, time, tracemalloc, datetime, uuid, argparse, unittest
-#
-# Tidak ada pustaka pihak ketiga (pip) yang wajib diinstal.
+# 2. Modul Deteksi Citra Fisik Beras / Computer Vision (cv_engine.py):
+#    Memerlukan pustaka komputasi numerik & pengolahan citra standar lokal:
+pillow>=9.0.0
+numpy>=1.20.0
+scipy>=1.8.0
+

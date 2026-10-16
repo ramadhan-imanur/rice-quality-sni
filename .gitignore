@@ -14,9 +14,10 @@ htmlcov/
 .tox/
 .nox/
 
-# Generated Output Documents
+# Generated Output Documents & SQLite DB
 output/*
 !output/.gitkeep
+data/*.db
 
 # Operating System & IDE Artifacts
 .DS_Store
@@ -26,3 +27,10 @@ Thumbs.db
 *.swp
 *.swo
 *~
+
+# Node.js & Playwright Test Artifacts
+node_modules/
+test-results/
+playwright-report/
+tests/e2e/playwright-report/
+.last-run.json

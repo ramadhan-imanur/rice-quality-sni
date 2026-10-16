@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Penilai Mutu Beras SNI 6128:2020 & Kalkulator Harga Bapanas</title>
+  <title>Sistem Taksasi Mutu Beras Digital SNI 6128:2020 & Kalkulator Harga Bapanas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -17,379 +20,560 @@
           </svg>
         </div>
         <div>
-          <h1>Penilai Mutu Beras SNI 6128:2020</h1>
-          <p class="subtitle">Kalkulator Deterministik & Rekomendasi Harga Bapanas No. 67/2024</p>
+          <h1>Sistem Taksasi Mutu Beras Digital SNI 6128:2020</h1>
+          <p class="subtitle">Platform Pre-Grading Computer Vision & Rekomendasi Harga Bapanas No. 67/2024</p>
         </div>
       </div>
       <div class="header-badges">
-        <span class="pill pill-outline">S1 Matematika FMIPA UNS</span>
-        <span class="pill pill-accent">Biaya Komputasi Rp 0</span>
+        <a href="verify.html" class="pill pill-outline" style="text-decoration: none; color: #fff; background: rgba(255,255,255,0.15);">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align: middle; margin-right: 4px;">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          Verifikasi Lembar Taksasi Publik
+        </a>
+        <span class="pill pill-accent">S1 Matematika UNS</span>
       </div>
     </div>
   </header>
 
-  <!-- KONTEN UTAMA -->
+  <!-- NAVIGASI TAB MODUS KERJA -->
+  <nav class="app-nav-wrapper no-print">
+    <div class="app-nav-container">
+      <button type="button" class="tab-btn active" data-tab="tab-simulation">
+        🌾 Simulasi & Kamera CV
+      </button>
+      <button type="button" class="tab-btn" data-tab="tab-maker">
+        📋 Pengajuan Batch Petani
+      </button>
+      <button type="button" class="tab-btn" data-tab="tab-checker">
+        🔬 Pengujian Lab Analis
+      </button>
+      <button type="button" class="tab-btn" data-tab="tab-certificates">
+        📜 Arsip Lembar Taksasi
+      </button>
+    </div>
+  </nav>
+
+  <!-- KONTEN UTAMA APLIKASI -->
   <main class="main-layout no-print">
-    <div class="content-grid">
-      <!-- KOLOM KIRI: FORMULIR INPUT & PRESET -->
-      <section class="card input-card">
+
+    <!-- ================================================================= -->
+    <!-- TAB 1: SIMULASI MANDIRI PETANI & COMPUTER VISION                  -->
+    <!-- ================================================================= -->
+    <div id="tab-simulation" class="tab-content active">
+      <div class="sim-alert-banner">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink: 0;">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div>
+          <strong>Instrumen Pra-Inspeksi & Transparansi Pasar (Bukan Sertifikat KAN):</strong>
+          <span>Sistem ini berfungsi sebagai penaksir mutu independen berbasis Computer Vision dan standar SNI 6128:2020 untuk melindungi petani dari taksiran sepihak tengkulak. Bukan pengganti sertifikat resmi LSPro terakreditasi KAN.</span>
+        </div>
+      </div>
+
+      <!-- MODUL COMPUTER VISION: SCAN CITRA BUTIRAN BERAS -->
+      <section class="cv-card">
         <div class="card-header">
-          <h2>1. Masukan Parameter Fisik Sampel</h2>
-          <p class="card-sub">Isi 4 nilai pengukuran atau pilih preset uji untuk evaluasi cepat.</p>
-        </div>
-
-        <!-- PRESET SAMPEL CEPAT -->
-        <div class="preset-section">
-          <label class="section-label">Contoh Sampel Cepat:</label>
-          <div class="preset-buttons" role="group" aria-label="Preset Sampel">
-            <button type="button" class="btn-chip" data-preset="premium_ideal">Premium Ideal</button>
-            <button type="button" class="btn-chip" data-preset="premium_boundary">Batas Premium</button>
-            <button type="button" class="btn-chip" data-preset="medium_1">Medium I</button>
-            <button type="button" class="btn-chip" data-preset="medium_2">Medium II</button>
-            <button type="button" class="btn-chip" data-preset="substandar_air">Substandar Basah</button>
-          </div>
-        </div>
-
-        <!-- FORM PENGUJIAN -->
-        <form id="quality-form" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="store_name">Nama Kios / RMU / BUMDes</label>
-              <input type="text" id="store_name" class="input-control" placeholder="Contoh: Kios Beras Makmur / RMU Berkah" maxlength="60">
-              <span class="field-hint">Opsional. Ditampilkan pada kop surat cetak sertifikat.</span>
-            </div>
-            <div class="form-group">
-              <label for="sample_id">Identitas / Nama Sampel Beras</label>
-              <input type="text" id="sample_id" class="input-control" placeholder="Contoh: Beras Ciherang IR64" maxlength="60">
-              <span class="field-hint">Opsional. Default nomor urut otomatis.</span>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="kadar_air">
-                Kadar Air (%) <span class="required">*</span>
-              </label>
-              <div class="input-wrapper">
-                <input type="number" id="kadar_air" class="input-control" min="0" max="40" step="0.1" required placeholder="0.0 - 40.0">
-                <span class="unit-suffix">%</span>
-              </div>
-              <span class="field-hint">SNI Maks: <strong>14.0%</strong> (Air > 14% dikenai penalti pengeringan)</span>
-              <span class="error-message" id="err-kadar_air"></span>
-            </div>
-
-            <div class="form-group">
-              <label for="butir_patah">
-                Butir Patah (%) <span class="required">*</span>
-              </label>
-              <div class="input-wrapper">
-                <input type="number" id="butir_patah" class="input-control" min="0" max="100" step="0.1" required placeholder="0.0 - 100.0">
-                <span class="unit-suffix">%</span>
-              </div>
-              <span class="field-hint">Premium &le;15% | Med I &le;20% | Med II &le;25%</span>
-              <span class="error-message" id="err-butir_patah"></span>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="butir_menir">
-                Butir Menir (%) <span class="required">*</span>
-              </label>
-              <div class="input-wrapper">
-                <input type="number" id="butir_menir" class="input-control" min="0" max="100" step="0.1" required placeholder="0.0 - 100.0">
-                <span class="unit-suffix">%</span>
-              </div>
-              <span class="field-hint">Premium &le;0.5% | Med I &le;2.0% | Med II &le;5.0%</span>
-              <span class="error-message" id="err-butir_menir"></span>
-            </div>
-
-            <div class="form-group">
-              <label for="benda_asing">
-                Benda Asing / Kotoran (%) <span class="required">*</span>
-              </label>
-              <div class="input-wrapper">
-                <input type="number" id="benda_asing" class="input-control" min="0" max="10" step="0.001" required placeholder="0.000 - 10.000">
-                <span class="unit-suffix">%</span>
-              </div>
-              <span class="field-hint">Premium &le;0.01% | Med I &le;0.02% | Med II &le;0.05%</span>
-              <span class="error-message" id="err-benda_asing"></span>
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" id="btn-submit" class="btn btn-primary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20 6 9 17 4 12"/>
+          <div style="display:flex; align-items:center; gap:0.75rem;">
+            <div style="background:var(--color-husk-muted); padding:0.5rem; border-radius:var(--radius-sm); color:var(--color-forest-deep); display:flex; align-items:center;">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+                <circle cx="12" cy="13" r="4"/>
               </svg>
-              Evaluasi Mutu & Hitung Harga
-            </button>
-            <button type="button" id="btn-reset" class="btn btn-secondary">Reset</button>
+            </div>
+            <div>
+              <h2 style="font-size:1.15rem; color:var(--color-forest-deep); font-weight:800;">Inspeksi Citra Butir Beras (Computer Vision)</h2>
+              <p class="card-sub">Deteksi otomatis Butir Kepala, Butir Patah, Butir Menir, dan Benda Asing menggunakan kamera HP Anda.</p>
+            </div>
           </div>
-        </form>
+          <div class="btn-action-group">
+            <input type="file" id="cv-file-input" accept="image/*" capture="environment" style="display:none;">
+            <button type="button" id="btn-trigger-camera" class="btn btn-sm btn-primary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              Ambil Foto / Unggah Citra
+            </button>
+            <button type="button" id="btn-cv-demo" class="btn btn-sm btn-outline">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              ✨ Coba Sampel Demo
+            </button>
+          </div>
+        </div>
+
+        <div class="cv-instructions">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0; margin-top:2px;">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="16" x2="12" y2="12"/>
+            <line x1="12" y1="8" x2="12.01" y2="8"/>
+          </svg>
+          <div>
+            <strong>Petunjuk Pengambilan Foto Akurat:</strong> Sebarkan 50–100 butir beras di atas selembar kertas/karton hitam atau baki gelap tanpa saling bertumpuk. Posisikan kamera ponsel tegak lurus dari atas dengan pencahayaan terang merata.
+          </div>
+        </div>
+
+        <!-- AREA HASIL DETEKSI CITRA CV -->
+        <div id="cv-result-box" style="display: none;">
+          <div class="cv-preview-container">
+            <img id="cv-preview-img" class="cv-preview-img" alt="Hasil Anotasi Butir Beras">
+            <div class="cv-legend">
+              <div class="cv-legend-item">
+                <div class="cv-legend-dot" style="background:#22c55e;"></div>
+                <span>Butir Kepala (&ge;80% L)</span>
+              </div>
+              <div class="cv-legend-item">
+                <div class="cv-legend-dot" style="background:#f59e0b;"></div>
+                <span>Butir Patah (20-80% L)</span>
+              </div>
+              <div class="cv-legend-item">
+                <div class="cv-legend-dot" style="background:#ef4444;"></div>
+                <span>Butir Menir (&lt;20% L)</span>
+              </div>
+              <div class="cv-legend-item">
+                <div class="cv-legend-dot" style="background:#b450dc;"></div>
+                <span>Benda Asing</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATS HASIL CITRA -->
+          <div class="cv-stats-grid">
+            <div class="cv-stat-box">
+              <div class="cv-stat-label">Total Butir</div>
+              <div class="cv-stat-val" id="cv-stat-total">0</div>
+            </div>
+            <div class="cv-stat-box">
+              <div class="cv-stat-label">Butir Kepala</div>
+              <div class="cv-stat-val" style="color:#166534;" id="cv-stat-head">0%</div>
+            </div>
+            <div class="cv-stat-box">
+              <div class="cv-stat-label">Butir Patah</div>
+              <div class="cv-stat-val" style="color:#b45309;" id="cv-stat-broken">0%</div>
+            </div>
+            <div class="cv-stat-box">
+              <div class="cv-stat-label">Butir Menir</div>
+              <div class="cv-stat-val" style="color:#b91c1c;" id="cv-stat-menir">0%</div>
+            </div>
+            <div class="cv-stat-box">
+              <div class="cv-stat-label">Benda Asing</div>
+              <div class="cv-stat-val" style="color:#6b21a8;" id="cv-stat-foreign">0%</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 0.75rem; text-align: right;">
+            <button type="button" id="btn-apply-cv" class="btn btn-sm btn-success">
+              ✓ Terapkan Hasil Foto ke Formulir Penilai Mutu
+            </button>
+          </div>
+        </div>
       </section>
 
-      <!-- KOLOM KANAN: HASIL EVALUASI & REKOMENDASI HARGA -->
-      <section class="card result-card" id="result-card">
-        <div class="card-header">
-          <h2>2. Hasil Evaluasi & Rekomendasi</h2>
-          <span class="cert-serial" id="res-cert-number">SNI-BELUM-DIUJI</span>
-        </div>
-
-        <div id="result-placeholder" class="result-placeholder">
-          <div class="placeholder-icon" aria-hidden="true">
-            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <circle cx="12" cy="12" r="10"/>
-              <line x1="12" y1="16" x2="12" y2="12"/>
-              <line x1="12" y1="8" x2="12.01" y2="8"/>
-            </svg>
+      <div class="content-grid">
+        <!-- KOLOM KIRI: FORMULIR INPUT PARAMETER -->
+        <section class="card input-card">
+          <div class="card-header">
+            <h2>Parameter Fisik Sampel Beras</h2>
+            <p class="card-sub">Isi manual, gunakan hasil kamera CV di atas, atau pilih preset untuk evaluasi cepat.</p>
           </div>
-          <p>Masukkan 4 nilai parameter fisik di sebelah kiri lalu klik <strong>Evaluasi Mutu</strong> untuk melihat klasifikasi SNI dan rekomendasi harga resmi Bapanas.</p>
-        </div>
 
-        <div id="result-content" class="result-content" style="display: none;">
-          <!-- BADGE KELAS MUTU -->
-          <div class="grade-banner" id="grade-banner">
-            <div class="grade-icon" id="grade-icon">✓</div>
-            <div class="grade-info">
-              <span class="grade-pre">KELAS MUTU TERIDENTIFIKASI:</span>
-              <h3 class="grade-title" id="res-grade-title">PREMIUM</h3>
-              <p class="grade-desc" id="res-grade-desc">Memenuhi seluruh standar batas toleransi SNI 6128:2020 Kelas Premium.</p>
+          <!-- PRESET SAMPEL CEPAT -->
+          <div class="preset-section">
+            <label class="section-label">Preset Cepat:</label>
+            <div class="preset-buttons" role="group" aria-label="Preset Sampel">
+              <button type="button" class="btn-chip" data-preset="premium_ideal">Premium Ideal</button>
+              <button type="button" class="btn-chip" data-preset="premium_boundary">Batas Premium</button>
+              <button type="button" class="btn-chip" data-preset="medium_1">Medium I</button>
+              <button type="button" class="btn-chip" data-preset="medium_2">Medium II</button>
+              <button type="button" class="btn-chip" data-preset="substandar_air">Substandar Basah</button>
             </div>
           </div>
 
-          <!-- STATUS PARAMETER -->
-          <div class="param-summary">
-            <h4>Rincian Parameter vs Batas Baku:</h4>
-            <div class="param-grid" id="res-param-grid">
+          <!-- FORM PENGUJIAN SIMULASI -->
+          <form id="simulation-form" novalidate>
+            <div class="form-group">
+              <label for="sim_sample_id">Nama Sampel / Identitas Percobaan</label>
+              <input type="text" id="sim_sample_id" class="input-control" placeholder="Contoh: Beras Ciherang IR64" maxlength="60">
+              <span class="field-hint">Untuk identifikasi tampilan pada lembar taksasi.</span>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sim_kadar_air">Kadar Air (%) <span class="required">*</span></label>
+                <div class="input-wrapper">
+                  <input type="number" id="sim_kadar_air" class="input-control" min="0" max="40" step="0.1" required placeholder="0.0 - 40.0" value="13.5">
+                  <span class="unit-suffix">%</span>
+                </div>
+                <span class="field-hint">Diukur via Moisture Tester saku (Kamera tidak mendeteksi molekul air internal). SNI Maks: <strong>14.0%</strong></span>
+                <span class="error-message" id="err-sim_kadar_air"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="sim_butir_patah">Butir Patah (%) <span class="required">*</span></label>
+                <div class="input-wrapper">
+                  <input type="number" id="sim_butir_patah" class="input-control" min="0" max="100" step="0.1" required placeholder="0.0 - 100.0">
+                  <span class="unit-suffix">%</span>
+                </div>
+                <span class="field-hint">Premium &le;15% | Med I &le;20% | Med II &le;25%</span>
+                <span class="error-message" id="err-sim_butir_patah"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="sim_butir_menir">Butir Menir (%) <span class="required">*</span></label>
+                <div class="input-wrapper">
+                  <input type="number" id="sim_butir_menir" class="input-control" min="0" max="100" step="0.1" required placeholder="0.0 - 100.0">
+                  <span class="unit-suffix">%</span>
+                </div>
+                <span class="field-hint">Premium &le;0.5% | Med I &le;2.0% | Med II &le;5.0%</span>
+                <span class="error-message" id="err-sim_butir_menir"></span>
+              </div>
+
+              <div class="form-group">
+                <label for="sim_benda_asing">Benda Asing / Kotoran (%) <span class="required">*</span></label>
+                <div class="input-wrapper">
+                  <input type="number" id="sim_benda_asing" class="input-control" min="0" max="10" step="0.001" required placeholder="0.000 - 10.000">
+                  <span class="unit-suffix">%</span>
+                </div>
+                <span class="field-hint">Premium &le;0.01% | Med I &le;0.02% | Med II &le;0.05%</span>
+                <span class="error-message" id="err-sim_benda_asing"></span>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" id="btn-sim-submit" class="btn btn-primary">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                Hitung Taksasi Mutu & Harga
+              </button>
+              <button type="button" id="btn-sim-reset" class="btn btn-secondary">Reset</button>
+            </div>
+          </form>
+        </section>
+
+        <!-- KOLOM KANAN: HASIL TAKSASI & INDIKATOR AMBANG BATAS -->
+        <section class="card result-card">
+          <div class="card-header">
+            <h2>Hasil Taksasi Mutu & Analisis Ambang Batas</h2>
+            <span class="pill pill-accent" style="background:#fef3c7; color:#92400e;">ESTIMASI PRELIMINER</span>
+          </div>
+
+          <div id="sim-result-placeholder" class="result-placeholder">
+            <div class="placeholder-icon" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <line x1="12" y1="8" x2="12.01" y2="8"/>
+              </svg>
+            </div>
+            <p>Ambil foto beras dengan tombol kamera di atas atau masukkan nilai parameter fisik untuk melihat hasil taksasi mutu dan harga acuan Bapanas.</p>
+          </div>
+
+          <div id="sim-result-content" class="result-content" style="display: none;">
+            <!-- BADGE KELAS MUTU -->
+            <div class="grade-banner" id="sim-grade-banner">
+              <div class="grade-icon" id="sim-grade-icon">✓</div>
+              <div class="grade-info">
+                <span class="grade-pre">HASIL ESTIMASI KELAS MUTU:</span>
+                <h3 class="grade-title" id="sim-grade-title">PREMIUM</h3>
+                <p class="grade-desc" id="sim-grade-desc">Memenuhi standar mutu tertinggi beras.</p>
+              </div>
+            </div>
+
+            <!-- PENJELASAN DIAGNOSIS / KENAPA TURUN KELAS -->
+            <div class="verdict-box" id="sim-verdict-box">
               <!-- Render via JS -->
             </div>
-          </div>
 
-          <!-- KOTAK KALKULASI FINANSIAL -->
-          <div class="pricing-box">
-            <h4>Rekomendasi Finansial (Bapanas No. 67/2024):</h4>
-            <table class="price-table">
-              <tbody>
-                <tr>
-                  <td>Harga Dasar Acuan Bapanas</td>
-                  <td class="text-right" id="res-price-base">Rp 15.800 / kg</td>
-                </tr>
-                <tr>
-                  <td>
-                    Potongan Penalti Pengeringan
-                    <span class="table-sub" id="res-drying-sub">(Kelebihan air 0.0%)</span>
-                  </td>
-                  <td class="text-right text-danger" id="res-price-drying">- Rp 0 / kg</td>
-                </tr>
-                <tr>
-                  <td>
-                    Potongan Penyusutan Berat (1.5%)
-                    <span class="table-sub">(Proporsional kelembaban)</span>
-                  </td>
-                  <td class="text-right text-danger" id="res-price-shrinkage">- Rp 0 / kg</td>
-                </tr>
-                <tr class="total-row">
-                  <td><strong>Rekomendasi Harga Beli Bersih</strong></td>
-                  <td class="text-right net-price" id="res-price-net"><strong>Rp 15.800 / kg</strong></td>
-                </tr>
-              </tbody>
-            </table>
+            <!-- VISUALISASI INDIKATOR / TRAFFIC LIGHT PROGRESS BARS -->
+            <h4 style="font-size:0.9rem; margin-top:1rem; color:var(--color-text-sub);">Indikator Ambang Batas 4 Parameter SNI 6128:2020:</h4>
+            <div class="gauge-grid" id="sim-gauge-grid">
+              <!-- Render via JS -->
+            </div>
 
-            <!-- SIMULASI MUATAN 5 TON -->
-            <div class="simulation-note" id="res-simulation-box">
-              <span class="sim-badge">Simulasi 1 Truk (5.000 kg):</span>
-              <span id="res-sim-text">Total nilai transaksi wajar: Rp 79.000.000 (Melindungi petani dari taksiran sepihak).</span>
+            <!-- KOTAK ESTIMASI HARGA -->
+            <div class="pricing-box">
+              <h4>Estimasi Rekomendasi Beli (Bapanas No. 67/2024):</h4>
+              <table class="price-table">
+                <tbody>
+                  <tr>
+                    <td>Harga Dasar Acuan Bapanas</td>
+                    <td class="text-right" id="sim-price-base">Rp 15.800 / kg</td>
+                  </tr>
+                  <tr>
+                    <td>Potongan Penalti Pengeringan Air</td>
+                    <td class="text-right text-danger" id="sim-price-drying">- Rp 0 / kg</td>
+                  </tr>
+                  <tr>
+                    <td>Potongan Penyusutan Berat (1.5%)</td>
+                    <td class="text-right text-danger" id="sim-price-shrinkage">- Rp 0 / kg</td>
+                  </tr>
+                  <tr class="total-row">
+                    <td><strong>Estimasi Harga Beli Bersih</strong></td>
+                    <td class="text-right net-price" id="sim-price-net"><strong>Rp 15.800 / kg</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="simulation-note">
+                <span class="sim-badge">Simulasi 1 Truk (5.000 kg):</span>
+                <span id="sim-truck-val">Nilai transaksi wajar: Rp 79.000.000</span>
+              </div>
+            </div>
+
+            <div style="margin-top: 1.25rem;">
+              <button type="button" id="btn-go-to-maker" class="btn btn-primary btn-block">
+                📋 Ajukan Pengantar Batch ke Koperasi / RMU
+              </button>
             </div>
           </div>
-
-          <!-- AKSI SERTIFIKAT -->
-          <div class="cert-actions">
-            <button type="button" id="btn-print-cert" class="btn btn-success btn-block">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 6 2 18 2 18 9"/>
-                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
-                <rect x="6" y="14" width="12" height="8"/>
-              </svg>
-              Cetak / Simpan Sertifikat Resmi PDF (A4)
-            </button>
-            <button type="button" id="btn-save-log" class="btn btn-outline btn-block">
-              Simpan ke Riwayat Pengujian Lokal
-            </button>
-          </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
 
-    <!-- RUANG IKLAN AGRIBISNIS & STARTER PACK UMKM (MR-01, MR-03) -->
-    <aside class="ad-banner-container" aria-label="Ruang Promosi Mitra Tani & Starter Kit">
-      <div class="ad-badge">Paket Starter Kit Alat Uji UMKM (MR-03)</div>
-      <div class="ad-content">
-        <div class="ad-icon" aria-hidden="true">🌾</div>
-        <div class="ad-text">
-          <strong>Paket Starter Kit Alat Uji Mutu Beras SNI Siap Pakai:</strong>
-          <span>Sedia Moisture Tester Digital + Timbangan Saku 0.01g + Akses Web Penilai Mutu Beras. Siap pakai untuk kios beras, Gapoktan, & RMU desa.</span>
-        </div>
-        <a href="https://wa.me/?text=Halo%20Admin,%20saya%20tertarik%20dengan%20Paket%20Starter%20Kit%20Alat%20Uji%20Mutu%20Beras%20SNI%206128:2020" target="_blank" rel="noopener noreferrer" class="ad-cta">Pesan via WhatsApp</a>
-      </div>
-    </aside>
+    <!-- ================================================================= -->
+    <!-- TAB 2: PORTAL PETANI: PENGAJUAN BATCH (MAKER)                     -->
+    <!-- ================================================================= -->
+    <div id="tab-maker" class="tab-content">
+      <div class="maker-section">
+        <!-- FORMULIR PENGAJUAN BATCH OLEH PETANI -->
+        <section class="card">
+          <div class="card-header">
+            <h2>Pengajuan Pengantar Sampel Batch</h2>
+            <p class="card-sub">Isi data panen Anda. Sistem akan menerbitkan <strong>Label Pengantar Sampel</strong> ber-barcode untuk ditempel pada kantong sampel beras fisik yang dikirim ke RMU/Koperasi.</p>
+          </div>
 
-    <!-- BAGIAN RIWAYAT PENGUJIAN LOKAL (FR-07) -->
-    <section class="card history-card">
-      <div class="card-header history-header">
-        <div>
-          <h2>3. Riwayat Pengujian Sampel Lokal</h2>
-          <p class="card-sub">Data disimpan secara luring pada penyimpanan peramban lokal (offline-first).</p>
+          <form id="maker-batch-form">
+            <div class="form-group">
+              <label for="m_petani_nama">Nama Lengkap Petani / Pemilik <span class="required">*</span></label>
+              <input type="text" id="m_petani_nama" class="input-control" value="Sutrisno Raharjo" required>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="m_petani_nik">NIK Petani (16 Digit) <span class="required">*</span></label>
+                <input type="text" id="m_petani_nik" class="input-control" value="3311012304750001" maxlength="16" required>
+              </div>
+              <div class="form-group">
+                <label for="m_kontak">Nomor WhatsApp / HP <span class="required">*</span></label>
+                <input type="text" id="m_kontak" class="input-control" value="081234567890" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="m_varietas">Varietas Padi <span class="required">*</span></label>
+                <input type="text" id="m_varietas" class="input-control" value="Ciherang Super" required>
+              </div>
+              <div class="form-group">
+                <label for="m_tonase">Estimasi Tonase Batch (kg) <span class="required">*</span></label>
+                <input type="number" id="m_tonase" class="input-control" value="5000" min="100" step="50" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="m_asal_lahan">Lokasi Lahan Sawah <span class="required">*</span></label>
+                <input type="text" id="m_asal_lahan" class="input-control" value="Desa Manang, Kec. Grogol, Sukoharjo" required>
+              </div>
+              <div class="form-group">
+                <label for="m_tanggal_panen">Tanggal Panen <span class="required">*</span></label>
+                <input type="date" id="m_tanggal_panen" class="input-control" required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="m_catatan">Catatan / Keterangan Khusus</label>
+              <textarea id="m_catatan" class="input-control" rows="2" placeholder="Contoh: Pengeringan lantai terpal 2 hari, kadar air diperkirakan di bawah 14%"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/>
+                <line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+              Kirim Pengajuan & Terbitkan Label Sampel
+            </button>
+          </form>
+        </section>
+
+        <!-- DAFTAR BATCH SAYA & UNDUH LABEL -->
+        <section class="card">
+          <div class="card-header history-header">
+            <div>
+              <h2>Status Pengajuan Sampel Anda</h2>
+              <p class="card-sub">Daftar batch sampel yang diajukan ke unit pengujian mutu.</p>
+            </div>
+            <button type="button" id="btn-refresh-submissions" class="btn btn-sm btn-outline">Muat Ulang</button>
+          </div>
+
+          <div class="table-responsive">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>ID Batch</th>
+                  <th>Varietas</th>
+                  <th>Tonase</th>
+                  <th>Status</th>
+                  <th>Aksi Dokumen</th>
+                </tr>
+              </thead>
+              <tbody id="maker-submissions-tbody">
+                <!-- Render via JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 3: PORTAL ANALIS LAB: PENGUJIAN & TAKSASI (CHECKER)           -->
+    <!-- ================================================================= -->
+    <div id="tab-checker" class="tab-content">
+      <div class="card" style="margin-bottom: 1.5rem;">
+        <div class="card-header history-header">
+          <div>
+            <h2>Antrean Sampel Masuk (Status: PENDING)</h2>
+            <p class="card-sub">Pilih sampel petani untuk melakukan input pengujian parameter mutu atau gunakan pemindaian Computer Vision.</p>
+          </div>
+          <button type="button" id="btn-refresh-pending" class="btn btn-sm btn-outline">Segarkan Antrean</button>
         </div>
-        <div class="history-actions">
-          <button type="button" id="btn-export-json" class="btn btn-sm btn-outline">Unduh JSON</button>
-          <button type="button" id="btn-clear-history" class="btn btn-sm btn-danger-ghost">Hapus Riwayat</button>
+
+        <div class="table-responsive">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Waktu Pengajuan</th>
+                <th>ID Batch / Barcode</th>
+                <th>Nama Petani</th>
+                <th>Varietas & Asal Lahan</th>
+                <th>Tonase</th>
+                <th>Status</th>
+                <th>Tindakan Penilai</th>
+              </tr>
+            </thead>
+            <tbody id="checker-pending-tbody">
+              <!-- Render via JS -->
+            </tbody>
+          </table>
         </div>
       </div>
-      <div class="table-responsive">
-        <table class="history-table" id="history-table">
-          <thead>
-            <tr>
-              <th>Waktu Uji</th>
-              <th>No. Sertifikat</th>
-              <th>Nama Sampel</th>
-              <th>Kadar Air</th>
-              <th>Butir Patah</th>
-              <th>Kelas Mutu</th>
-              <th>Harga Bersih</th>
-              <th>Aksi</th>
-            </tr>
-          </thead>
-          <tbody id="history-tbody">
-            <!-- Render via JS -->
-          </tbody>
-        </table>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- TAB 4: BANK LEMBAR TAKSASI & AUDIT TRAIL                          -->
+    <!-- ================================================================= -->
+    <div id="tab-certificates" class="tab-content">
+      <div class="card">
+        <div class="card-header history-header">
+          <div>
+            <h2>Bank Lembar Taksasi Mutu Beras & Jejak Audit</h2>
+            <p class="card-sub">Daftar seluruh lembar taksasi mutu resmi yang telah terverifikasi dan dilengkapi tanda tangan kriptografi HMAC-SHA256.</p>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <input type="text" id="cert-search-input" class="input-control" placeholder="Cari No. Taksasi / Petani..." style="max-width: 260px;">
+            <button type="button" id="btn-refresh-certs" class="btn btn-sm btn-outline">Segarkan</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>No. Taksasi</th>
+                <th>Tanggal Taksasi</th>
+                <th>Pemilik / Petani</th>
+                <th>Varietas</th>
+                <th>Kelas Mutu</th>
+                <th>Harga Bersih</th>
+                <th>Tanda Tangan Digital</th>
+                <th>Aksi Dokumen</th>
+              </tr>
+            </thead>
+            <tbody id="certificates-tbody">
+              <!-- Render via JS -->
+            </tbody>
+          </table>
+        </div>
       </div>
-    </section>
+    </div>
+
   </main>
 
   <!-- ================================================================= -->
-  <!-- TAMPILAN CETAK LEMBAR SERTIFIKAT RESMI A4 (FR-05 & MR-02)         -->
-  <!-- Ditampilkan hanya saat window.print() atau mode cetak              -->
+  <!-- MODAL DIALOG: INPUT HASIL UJI ANALIS (CHECKER WORKFLOW)           -->
   <!-- ================================================================= -->
-  <section id="printable-certificate" class="printable-certificate" aria-hidden="true">
-    <div class="cert-page">
-      <!-- KOP RESMI -->
-      <div class="cert-kop">
-        <div class="cert-kop-logo">SNI</div>
-        <div class="cert-kop-text">
-          <h2 id="cert-print-store-name">UNIT VERIFIKASI MUTU BERAS RAKYAT</h2>
-          <h3>BADAN USAHA MILIK DESA / GABUNGAN KELOMPOK TANI (GAPOKTAN)</h3>
-          <p>Layanan Penilaian Objektif Mutu Beras Berdasarkan Standar Nasional Indonesia</p>
+  <div id="modal-lab-test" class="modal-overlay" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-lab-title">Pengujian Parameter Fisik Batch</h3>
+        <button type="button" class="modal-close" id="btn-close-modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="verdict-box" id="modal-batch-info">
+          Memuat rincian batch petani...
         </div>
-        <div class="cert-kop-logo right-logo">UNS</div>
-      </div>
-      <div class="cert-divider-double"></div>
 
-      <!-- JUDUL SERTIFIKAT -->
-      <div class="cert-title-block">
-        <h1>SERTIFIKAT HASIL PENGUJIAN MUTU BERAS</h1>
-        <p class="cert-reg-ref">Acuan Baku: SNI 6128:2020 & Peraturan Bapanas No. 67/2024</p>
-        <div class="cert-serial-tag" id="cert-print-serial">NO: SNI-20261013-000000</div>
-      </div>
+        <form id="lab-test-form">
+          <input type="hidden" id="lab_sub_id">
 
-      <!-- METADATA SAMPEL -->
-      <table class="cert-meta-table">
-        <tbody>
-          <tr>
-            <td class="meta-label">Identitas Sampel:</td>
-            <td class="meta-val" id="cert-print-id">-</td>
-            <td class="meta-label">Tanggal Uji:</td>
-            <td class="meta-val" id="cert-print-date">-</td>
-          </tr>
-          <tr>
-            <td class="meta-label">Metode Evaluasi:</td>
-            <td class="meta-val">Deterministik Pohon Keputusan O(1)</td>
-            <td class="meta-label">Status Verifikasi:</td>
-            <td class="meta-val">Terverifikasi Standar Mutu</td>
-          </tr>
-        </tbody>
-      </table>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lab_kadar_air">Kadar Air Terukur (%) <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <input type="number" id="lab_kadar_air" class="input-control" min="0" max="40" step="0.01" required placeholder="Contoh: 13.4" value="13.4">
+                <span class="unit-suffix">%</span>
+              </div>
+              <span class="field-hint">Alat: Moisture Tester Terkalibrasi (Batas SNI &le;14.0%)</span>
+            </div>
 
-      <!-- TABEL PARAMETER FISIK -->
-      <h3 class="cert-section-head">I. HASIL PENGUKURAN 4 PARAMETER FISIK BERAS</h3>
-      <table class="cert-data-table">
-        <thead>
-          <tr>
-            <th>No</th>
-            <th>Parameter Mutu Fisik</th>
-            <th>Nilai Terukur</th>
-            <th>Toleransi Premium</th>
-            <th>Toleransi Med. I</th>
-            <th>Toleransi Med. II</th>
-            <th>Status Batas</th>
-          </tr>
-        </thead>
-        <tbody id="cert-print-params-tbody">
-          <!-- Render via JS -->
-        </tbody>
-      </table>
-
-      <!-- KOTAK KELAS MUTU BESAR -->
-      <div class="cert-grade-box">
-        <div class="cert-grade-label">HASIL KLASIFIKASI KELAS MUTU RESMI:</div>
-        <div class="cert-grade-name" id="cert-print-grade">MUTU PREMIUM</div>
-        <div class="cert-grade-statement" id="cert-print-statement">Sampel dinyatakan memenuhi seluruh ambang batas toleransi mutu fisik kelas Premium.</div>
-      </div>
-
-      <!-- KOTAK REKOMENDASI HARGA -->
-      <h3 class="cert-section-head">II. REKOMENDASI PENYESUAIAN HARGA (BAPANAS NO. 67/2024)</h3>
-      <table class="cert-price-table">
-        <tbody>
-          <tr>
-            <td>Harga Acuan Dasar Pembelian (HET/HPP)</td>
-            <td class="text-right" id="cert-print-base-price">Rp 15.800 / kg</td>
-          </tr>
-          <tr>
-            <td>Potongan Penalti Pengeringan Kadar Air (Rp 150/kg per 1% > 14%)</td>
-            <td class="text-right" id="cert-print-drying-pen">- Rp 0 / kg</td>
-          </tr>
-          <tr>
-            <td>Potongan Penyusutan Berat (1.5% proporsional kelembaban)</td>
-            <td class="text-right" id="cert-print-shrink-pen">- Rp 0 / kg</td>
-          </tr>
-          <tr class="cert-net-row">
-            <td><strong>Rekomendasi Harga Transaksi Pembelian Bersih</strong></td>
-            <td class="text-right" id="cert-print-net-price"><strong>Rp 15.800 / kg</strong></td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- PENGESAHAN & TANDA TANGAN -->
-      <div class="cert-sign-grid">
-        <div class="sign-col">
-          <p>Pemilik / Pengirim Sampel,</p>
-          <div class="sign-space"></div>
-          <p class="sign-name">( ............................................ )</p>
-          <p class="sign-sub">Petani / Pedagang Beras</p>
-        </div>
-        <div class="sign-col cert-seal-col">
-          <div class="cert-official-seal">
-            <span>MUTU RESMI</span>
-            <strong>SNI 6128:2020</strong>
-            <small>BAPANAS NO. 67</small>
+            <div class="form-group">
+              <label for="lab_butir_patah">Butir Patah Terukur (%) <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <input type="number" id="lab_butir_patah" class="input-control" min="0" max="100" step="0.01" required placeholder="Contoh: 12.5" value="12.5">
+                <span class="unit-suffix">%</span>
+              </div>
+              <span class="field-hint">Alat: Indent Grader atau Kamera CV</span>
+            </div>
           </div>
-        </div>
-        <div class="sign-col">
-          <p id="cert-print-sign-loc">Surakarta, 13 Oktober 2026</p>
-          <p>Petugas Penilai Mutu (Inspektur),</p>
-          <div class="sign-space"></div>
-          <p class="sign-name"><strong>Ramadhaan I. R. (M0124015)</strong></p>
-          <p class="sign-sub">S1 Matematika FMIPA UNS</p>
-        </div>
-      </div>
 
-      <!-- CATATAN KAKI SERTIFIKAT -->
-      <div class="cert-footer-note">
-        <p><strong>Catatan Hukum:</strong> Sertifikat ini diterbitkan secara deterministik mandiri oleh Sistem Penilai Mutu Beras UNS berbiaya komputasi Rp 0 sebagai acuan transaksi wajar di tingkat penggilingan/desa. Dokumen ini sah sebagai instrumen transparansi pasar internal dan bukan pengganti sertifikasi akreditasi KAN resmi.</p>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="lab_butir_menir">Butir Menir Terukur (%) <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <input type="number" id="lab_butir_menir" class="input-control" min="0" max="100" step="0.01" required placeholder="Contoh: 0.35" value="0.35">
+                <span class="unit-suffix">%</span>
+              </div>
+              <span class="field-hint">Alat: Ayakan Lubang 2.0mm atau Kamera CV</span>
+            </div>
+
+            <div class="form-group">
+              <label for="lab_benda_asing">Benda Asing / Kotoran (%) <span class="required">*</span></label>
+              <div class="input-wrapper">
+                <input type="number" id="lab_benda_asing" class="input-control" min="0" max="10" step="0.0001" required placeholder="Contoh: 0.0080" value="0.0080">
+                <span class="unit-suffix">%</span>
+              </div>
+              <span class="field-hint">Alat: Timbangan Analitik atau Deteksi Citra CV</span>
+            </div>
+          </div>
+
+          <div class="form-actions" style="margin-top: 1.5rem;">
+            <button type="submit" class="btn btn-success btn-block">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+              Verifikasi Taksasi & Terbitkan Lembar Hasil Resmi (HMAC-SHA256)
+            </button>
+          </div>
+        </form>
       </div>
     </div>
-  </section>
+  </div>
 
   <script src="app.js"></script>
 </body>

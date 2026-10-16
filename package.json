@@ -1,0 +1,23 @@
+{
+  "name": "code",
+  "version": "1.0.0",
+  "description": "[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Python: 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/) [![Standards: SNI 6128:2020](https://img.shields.io/badge/Standard-SNI%206128%3A2020-green.svg)](https://bsn.go.id) [![Regulation: Bapanas 67/2024](https://img.shields.io/badge/Regulasi-Bapanas%20No.%2067%2F2024-red.svg)](https://badanpangan.go.id) [![Zero-Dependency](https://img.shields.io/badge/Dependencies-Zero%20(Pure%20Stdlib)-brightgreen.svg)](#arsitektur-sistem) [![Latency](https://img.shields.io/badge/Latency-1.17%20ms-informational.svg)](#hasil-verifikasi-kebutuhan-non-fungsional-nfr)",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramadhan-imanur/rice-quality-sni.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramadhan-imanur/rice-quality-sni/issues"
+  },
+  "homepage": "https://github.com/ramadhan-imanur/rice-quality-sni#readme"
+}
