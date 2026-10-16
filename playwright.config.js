@@ -1,8 +1,9 @@
 // @ts-check
-const { defineConfig, devices } = require('@playwright/test');
+const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
   testDir: './tests/e2e',
+  testMatch: /.*\.spec\.js/,
   timeout: 30000,
   expect: {
     timeout: 5000,
@@ -18,9 +19,19 @@ module.exports = defineConfig({
   },
   projects: [
     {
-      name: 'chromium',
+      name: 'Desktop Chrome (1280px)',
       use: {
-        ...devices['Desktop Chrome'],
+        browserName: 'chromium',
+        viewport: { width: 1280, height: 800 },
+      },
+    },
+    {
+      name: 'Mobile Viewport (375px)',
+      use: {
+        browserName: 'chromium',
+        viewport: { width: 375, height: 667 },
+        isMobile: true,
+        hasTouch: true,
       },
     },
   ],

@@ -744,7 +744,8 @@ if __name__ == "__main__":
     hasil = evaluate_sample(13.4, 13.5, 0.4, 0.008, sample_id="Beras Pandan Wangi Super")
 
     # 2. Generate PDF Resmi dengan QR Code & Signature
-    output_dir = os.path.join(os.path.dirname(__file__), "output")
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    output_dir = os.path.join(project_root, "output")
     path_cert = generate_certificate(
         hasil,
         output_dir=output_dir,

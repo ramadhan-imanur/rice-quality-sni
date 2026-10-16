@@ -51,38 +51,61 @@ Sistem beroperasi **100% luring (*offline-first*)**, tanpa dependensi pustaka pi
 
 ---
 
-## Struktur Repositori
+## Struktur Repositori (Standard Industry src/ Layout)
 
 ```text
-rice-quality-sni/
-├── quality_engine.py         # Modul inti Python: validasi, klasifikasi SNI, kalkulasi harga Bapanas
-├── cv_engine.py              # Mesin Computer Vision: segmentasi Otsu, tensor inersia orde-2, klasifikasi butir
-├── database.py               # Lapisan persistensi SQLite (Users, Submissions, Certificates, Audit Logs) & HMAC
-├── qr_codec.py               # Generator matriks QR Code ISO/IEC 18004 murni (Zero External Dependencies)
-├── pdf_generator.py          # Generator Lembar Taksasi Mutu PDF A4 (QR vektor, segel HMAC, watermark, disclaimer UU)
-├── api_server.py             # Peladen REST API & Backend Maker-Checker + Computer Vision (Pustaka Standar Python)
-├── cli.py                    # Antarmuka CLI interaktif & otomasi terminal
-├── benchmark_performance.py  # Skrip tolok ukur latensi, alokasi heap RAM, dan ukuran berkas
-├── run_tests.sh              # Skrip runner otomatis untuk seluruh 32 pengujian unit & benchmark
-├── requirements.txt          # Spesifikasi dependensi (Pustaka Standar Python 3.8+ / Pillow, NumPy, SciPy untuk CV)
-├── LICENSE                   # Lisensi sumber terbuka MIT
-├── data/
-│   ├── rice_sni.db           # Basis data SQLite terpusat untuk integritas lembar taksasi
-│   └── lab_samples.json      # Basis data riwayat pengujian sampel format JSON
-├── output/
-│   └── .gitkeep              # Direktori keluaran berkas PDF taksasi lokal & label pengantar
-├── tests/
+code/
+├── src/                          # Paket sumber kode inti (Domain & Application Logic)
+│   ├── __init__.py               # Deklarasi paket & re-ekspor API publik
+│   ├── quality_engine.py         # Domain Core: Aturan SNI 6128:2020, klasifikasi O(1), penyesuaian Bapanas
+│   ├── cv_engine.py              # Computer Vision: Otsu segmentation, tensor inersia orde-2, filter butir
+│   ├── database.py               # Data Persistence: SQLite, PBKDF2 hashing, HMAC-SHA256, Audit logs
+│   ├── pdf_generator.py          # Document Service: Raw PDF 1.4, vektor QR ISO/IEC 18004, stempel digital
+│   ├── qr_codec.py               # Security Codec: Matriks QR Code mandiri tanpa dependensi pihak ketiga
+│   ├── api_server.py             # HTTP Gateway: Multithreaded REST API & peladen berkas statis
+│   └── cli.py                    # Terminal Interface: Wizard interaktif & eksekusi one-liner script
+├── web/                          # Klien antarmuka web responsif (< 85 KB, offline-first)
+│   ├── index.html                # Single-Page App: 4 Tab (Simulasi/CV, Maker, Checker, Arsip)
+│   ├── verify.html               # Portal publik verifikasi integritas taksasi
+│   ├── style.css                 # Desain UI agritech, deteksi preview, traffic-light gauges
+│   └── app.js                    # Pengendali kamera CV, tab, REST API fetch, & visualisasi
+├── scripts/                      # Skrip otomasi, tolok ukur, & utilitas pengembang
+│   ├── benchmark_performance.py  # Tolok ukur latensi (perf_counter) & RAM (tracemalloc)
+│   ├── run_tests.sh              # Skrip runner otomatis untuk seluruh 39 unit test & benchmark
+│   └── run_e2e_tests.sh          # Skrip runner otomatis untuk suite pengujian browser Playwright
+├── tests/                        # Suite pengujian komprehensif
 │   ├── __init__.py
-│   ├── test_quality_engine.py # 20 skenario unit test kasus batas toleransi SNI
-│   ├── test_maker_checker.py  # 6 skenario unit test arsitektur Maker-Checker & Anti-Fraud
-│   └── test_cv_engine.py      # 6 skenario unit test Computer Vision & tensor inersia
-└── web/                      # Antarmuka web responsif (< 85 KB)
-    ├── index.html            # Portal 4-Tab: Simulasi + CV, Maker Petani, Checker Lab, Bank Taksasi
-    ├── verify.html           # Portal publik verifikasi keaslian dokumen taksasi via QR Code / HMAC
-    ├── style.css             # Desain UI, deteksi CV preview, traffic-light gauges, & stylesheet cetak A4
-    └── app.js                # Pengendali kamera CV, tab, REST API fetch, & visualisasi interaktif
+│   ├── unit/                     # 39 Pengujian unit deterministik & audit keamanan
+│   │   ├── __init__.py
+│   │   ├── test_quality_engine.py# 20 kasus batas toleransi SNI
+│   │   ├── test_maker_checker.py # 6 skenario alur Maker-Checker & Anti-Fraud HMAC
+│   │   ├── test_cv_engine.py     # 6 skenario segmentasi & akurasi dimensi butir CV
+│   │   └── test_security_hardened.py # 7 skenario audit keamanan (OWASP, DoS, Rate Limit, UU PDP)
+│   └── e2e/                      # Pengujian End-to-End browser Playwright (Multi-Viewport)
+│       ├── pages/                # Page Object Models (Dashboard, Maker, Checker, Verify)
+│       ├── test_app_flows.spec.js# 18 pengujian E2E (Desktop 1280px & Mobile 375px)
+│       ├── capture_screenshots.js# Utilitas dokumentasi visual
+│       └── screenshots/          # Tangkapan layar otomatis antarmuka
+├── data/                         # Basis data & berkas persistensi
+│   ├── rice_sni.db               # Basis data SQLite terpusat untuk integritas lembar taksasi
+│   └── lab_samples.json          # Basis data riwayat pengujian sampel format JSON
+├── docs/                         # Spesifikasi teknis & dokumentasi sistem
+│   ├── ARCHITECTURE.md           # Peta arsitektur & panduan direktori pengembang
+│   └── DESIGN.md                 # Pedoman desain UI/UX agritech & token palet
+├── output/                       # Direktori keluaran berkas PDF taksasi lokal & label pengantar
+│   └── .gitkeep                  # Menjaga direktori tetap terlacak di Git
+├── supabase/                     # Skema migrasi komputasi awan (PostgreSQL)
+│   └── migrations/
+│       ├── 20261016_init_rls.sql # Skema RLS dasar & fungsi verifikasi publik
+│       └── 20261016_hardening.sql# Optimasi RLS JWT Metadata, Indeks Komposit, & Trigger Audit
+├── .env.example                  # Templat konfigurasi lingkungan produksi
+├── Makefile                      # Task runner pengembang (make test, make run, dll.)
+├── pyproject.toml                # Standar konfigurasi proyek Python & pytest
+├── requirements.txt              # Spesifikasi dependensi Python
+├── package.json                  # Dependensi Node.js / Playwright
+├── playwright.config.js          # Konfigurasi pengujian browser multi-viewport
+└── README.md                     # Gerbang dokumentasi utama repositori
 ```
-
 ---
 
 ## Landasan Aturan & Logika Keputusan
@@ -120,25 +143,28 @@ Evaluasi dilakukan berjenjang: Premium $\to$ Medium I $\to$ Medium II $\to$ Subs
 
 Jalankan wizard interaktif:
 ```bash
-python3 cli.py
+python3 src/cli.py
 ```
 
 Atau evaluasi langsung via argumen parameter baris perintah:
 ```bash
-python3 cli.py --ka 13.5 --bp 14.0 --mn 0.4 --ba 0.008 --id "Beras IR64 Super" --save --pdf
+python3 src/cli.py --ka 13.5 --bp 14.0 --mn 0.4 --ba 0.008 --id "Beras IR64 Super" --save --pdf
 ```
 
 Melihat riwayat pengujian lokal:
 ```bash
-python3 cli.py --history
+python3 src/cli.py --history
 ```
 
-### 2. Antarmuka Web & Peladen REST API (`api_server.py` & `web/`)
+### 2. Antarmuka Web & Peladen REST API (`src/api_server.py` & `web/`)
 
 Jalankan peladen REST API terpadu (menyajikan antarmuka Maker-Checker, database SQLite, dan endpoint verifikasi publik):
 ```bash
-# Jalankan peladen resmi backend + web
-python3 api_server.py
+# Menggunakan Makefile (Direkomendasikan)
+make run
+
+# Atau langsung via Python
+python3 src/api_server.py
 ```
 Akses melalui peramban:
 - **Aplikasi Utama (Maker-Checker & Simulasi):** `http://localhost:8000/`
@@ -153,16 +179,25 @@ Setelah memasukkan parameter dan menekan tombol *Evaluasi Mutu*, tekan tombol **
 
 Jalankan seluruh rangkaian uji dalam sekali jalan:
 ```bash
-./run_tests.sh
+# Melalui Makefile (Direkomendasikan)
+make test
+make test-e2e
+
+# Atau langsung via skrip otomasi
+bash scripts/run_tests.sh
+bash scripts/run_e2e_tests.sh
 ```
 
 Atau jalankan masing-masing komponen pengujian secara mandiri:
 ```bash
-# 1. 20 Unit test kasus batas logika SNI
-python3 -m unittest discover -s tests -p "test_*.py" -v
+# 1. 39 Unit test kasus batas logika SNI, alur Maker-Checker, CV Engine & Hardening Keamanan
+python3 -m unittest discover -s tests/unit -p "test_*.py" -v
 
 # 2. Tolok ukur kinerja NFR (1.000 iterasi)
-python3 benchmark_performance.py
+python3 scripts/benchmark_performance.py
+
+# 3. Pengujian E2E Multi-Viewport Playwright (18 pengujian)
+npx playwright test
 ```
 
 ---

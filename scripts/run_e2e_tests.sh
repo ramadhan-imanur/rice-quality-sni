@@ -6,8 +6,9 @@
 
 set -e
 
-DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$DIR"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
+cd "${ROOT_DIR}"
 
 echo "======================================================================"
 echo " MENJALANKAN SUITE PENGUJIAN END-TO-END (E2E) PLAYWRIGHT"
@@ -27,9 +28,9 @@ fi
 
 # Jalankan Playwright Test
 if [ -d "/tmp/pw-test/node_modules" ]; then
-    NODE_PATH=/tmp/pw-test/node_modules /tmp/pw-test/node_modules/.bin/playwright test --config "$DIR/playwright.config.js"
+    NODE_PATH=/tmp/pw-test/node_modules /tmp/pw-test/node_modules/.bin/playwright test --config "${ROOT_DIR}/playwright.config.js"
 else
-    npx playwright test --config "$DIR/playwright.config.js"
+    npx playwright test --config "${ROOT_DIR}/playwright.config.js"
 fi
 
 echo "======================================================================"

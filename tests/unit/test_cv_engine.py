@@ -24,7 +24,12 @@ import unittest
 from PIL import Image, ImageDraw
 import numpy as np
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(CURRENT_DIR))
+SRC_DIR = os.path.join(PROJECT_ROOT, "src")
+for p in (SRC_DIR, PROJECT_ROOT):
+    if p not in sys.path:
+        sys.path.insert(0, p)
 
 from cv_engine import RiceCVEngine, generate_synthetic_rice_image
 from quality_engine import evaluate_sample

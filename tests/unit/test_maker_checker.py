@@ -18,7 +18,12 @@ import sys
 import tempfile
 import unittest
 
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(CURRENT_DIR))
+SRC_DIR = os.path.join(PROJECT_ROOT, "src")
+for p in (SRC_DIR, PROJECT_ROOT):
+    if p not in sys.path:
+        sys.path.insert(0, p)
 
 from database import (
     init_db,

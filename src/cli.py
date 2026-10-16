@@ -23,8 +23,11 @@ from typing import Optional
 
 # Pastikan modul internal terjangkau
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
 if CURRENT_DIR not in sys.path:
     sys.path.insert(0, CURRENT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
 from quality_engine import (
     evaluate_sample,
@@ -37,8 +40,8 @@ from quality_engine import (
 from pdf_generator import generate_certificate
 
 
-DEFAULT_DATA_PATH = os.path.join(CURRENT_DIR, "data", "lab_samples.json")
-DEFAULT_OUTPUT_DIR = os.path.join(CURRENT_DIR, "output")
+DEFAULT_DATA_PATH = os.path.join(PROJECT_ROOT, "data", "lab_samples.json")
+DEFAULT_OUTPUT_DIR = os.path.join(PROJECT_ROOT, "output")
 
 
 def print_banner() -> None:

@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rice-quality-sni"
+version = "1.0.0"
+description = "Sistem Penilai Mutu Beras Deterministik O(1) & Generator Sertifikat Digital Berbiaya Rp 0 (SNI 6128:2020 & Bapanas No. 67/2024)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+authors = [
+    { name = "Ramadhaan Imanur Rochima", email = "ramadhaan@student.uns.ac.id" }
+]
+keywords = [
+    "agritech",
+    "rice-quality",
+    "sni-6128-2020",
+    "bapanas-67-2024",
+    "computer-vision",
+    "hmac-sha256",
+    "pdf-generator"
+]
+dependencies = [
+    "numpy>=1.20.0",
+    "pillow>=9.0.0",
+    "scipy>=1.7.0",
+]
+
+[project.scripts]
+rice-cli = "src.cli:main"
+rice-server = "src.api_server:run_server"
+
+[tool.pytest.ini_options]
+testpaths = ["tests/unit"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --tb=short"

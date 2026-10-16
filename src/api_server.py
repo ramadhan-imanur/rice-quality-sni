@@ -26,13 +26,19 @@ import os
 import re
 import socketserver
 import sys
+import threading
+import time
 import urllib.parse
+from collections import defaultdict
 from datetime import datetime
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
 if CURRENT_DIR not in sys.path:
     sys.path.insert(0, CURRENT_DIR)
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
 from cv_engine import analyze_rice_image, generate_synthetic_rice_image
 from database import (
@@ -57,8 +63,32 @@ from quality_engine import (
 )
 
 PORT = int(os.environ.get("PORT", 8000))
-WEB_DIR = os.path.join(CURRENT_DIR, "web")
-OUTPUT_DIR = os.path.join(CURRENT_DIR, "output")
+WEB_DIR = os.path.join(PROJECT_ROOT, "web")
+OUTPUT_DIR = os.path.join(PROJECT_ROOT, "output")
+MAX_PAYLOAD_SIZE = 15 * 1024 * 1024  # Maksimum payload 15 MB (DoS Guard)
+
+
+class InMemoryRateLimiter:
+    """Sliding-window rate limiter per alamat IP (CWE-770 & DoS Mitigation)."""
+
+    def __init__(self):
+        self._lock = threading.Lock()
+        self._buckets: Dict[str, List[float]] = defaultdict(list)
+
+    def is_allowed(self, key: str, max_requests: int, window_seconds: int = 60) -> bool:
+        now = time.time()
+        with self._lock:
+            # Singkirkan stempel waktu yang sudah kedaluwarsa
+            valid = [t for t in self._buckets[key] if now - t < window_seconds]
+            if len(valid) >= max_requests:
+                self._buckets[key] = valid
+                return False
+            valid.append(now)
+            self._buckets[key] = valid
+            return True
+
+
+RATE_LIMITER = InMemoryRateLimiter()
 
 
 def _is_safe_id(id_str: str) -> bool:
@@ -79,17 +109,30 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=WEB_DIR, **kwargs)
 
+    def _get_client_ip(self) -> str:
+        """Mengidentifikasi alamat IP klien untuk pembatasan laju (Rate Limiting)."""
+        forwarded_for = self.headers.get("X-Forwarded-For")
+        if forwarded_for:
+            return forwarded_for.split(",")[0].strip()
+        if self.client_address:
+            return str(self.client_address[0])
+        return "127.0.0.1"
+
     def _apply_security_headers(self) -> None:
-        """Menerapkan tajuk keamanan web standar (Defense-in-Depth)."""
+        """Menerapkan tajuk keamanan web standar industri (Defense-in-Depth)."""
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("X-Frame-Options", "DENY")
         self.send_header("Referrer-Policy", "strict-origin-when-cross-origin")
+        self.send_header("X-XSS-Protection", "1; mode=block")
+        self.send_header("Permissions-Policy", "camera=(self), geolocation=(), microphone=()")
         self.send_header(
             "Content-Security-Policy",
             "default-src 'self' data: blob:; "
-            "style-src 'self' 'unsafe-inline'; "
+            "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+            "font-src 'self' data: https://fonts.gstatic.com; "
             "script-src 'self' 'unsafe-inline'; "
-            "img-src 'self' data: blob:;",
+            "img-src 'self' data: blob:; "
+            "connect-src 'self';",
         )
 
     def _get_authenticated_user(self) -> Optional[Dict[str, Any]]:
@@ -123,13 +166,19 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
         self._send_json({"success": False, "error": message}, status_code=status_code)
 
     def _send_file(self, file_path: str, content_type: str = "application/pdf") -> None:
-        """Mengirimkan berkas biner (misal PDF) ke peramban dengan tajuk keamanan."""
-        if not os.path.isfile(file_path):
+        """Mengirimkan berkas biner (misal PDF) ke peramban dengan proteksi Path Traversal."""
+        real_path = os.path.realpath(file_path)
+        real_output_dir = os.path.realpath(OUTPUT_DIR)
+        if not real_path.startswith(real_output_dir):
+            self._send_error_json("Akses berkas ditolak (Path Traversal Protection)", 403)
+            return
+
+        if not os.path.isfile(real_path):
             self._send_error_json("Berkas tidak ditemukan di server", 404)
             return
 
-        file_size = os.path.getsize(file_path)
-        filename = os.path.basename(file_path)
+        file_size = os.path.getsize(real_path)
+        filename = os.path.basename(real_path)
 
         self.send_response(200)
         self.send_header("Content-Type", content_type)
@@ -139,20 +188,29 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
         self._apply_security_headers()
         self.end_headers()
 
-        with open(file_path, "rb") as f:
+        with open(real_path, "rb") as f:
             while chunk := f.read(65536):
                 self.wfile.write(chunk)
 
     def _parse_json_body(self) -> Dict[str, Any]:
-        """Membaca dan mem-parsing isi tubuh permintaan HTTP bertipe JSON."""
-        content_length = int(self.headers.get("Content-Length", 0))
-        if content_length == 0:
+        """Membaca dan mem-parsing isi tubuh permintaan HTTP bertipe JSON dengan batasan ukuran payload."""
+        raw_len = self.headers.get("Content-Length", "0")
+        try:
+            content_length = int(raw_len)
+        except (ValueError, TypeError):
+            raise ValueError("Nilai header Content-Length tidak valid")
+
+        if content_length <= 0:
             return {}
+
+        if content_length > MAX_PAYLOAD_SIZE:
+            raise BufferError(f"Ukuran payload ({content_length} bytes) melampaui batas maksimum 15 MB")
+
         body = self.rfile.read(content_length).decode("utf-8")
         try:
             return json.loads(body)
         except json.JSONDecodeError:
-            raise ValueError("Bad JSON payload")
+            raise ValueError("Format JSON payload tidak valid")
 
     def do_OPTIONS(self) -> None:
         """Menangani pre-flight CORS."""
@@ -172,6 +230,11 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
 
         # 1. API: Cek Keaslian Sertifikat (Public Anti-Fraud Verification)
         if path == "/api/verify":
+            client_ip = self._get_client_ip()
+            if not RATE_LIMITER.is_allowed(f"get_verify:{client_ip}", max_requests=60, window_seconds=60):
+                self._send_error_json("Batas laju permintaan verifikasi publik terlampaui. Harap coba lagi beberapa saat lagi.", 429)
+                return
+
             cert_id = query.get("id", [""])[0].strip()
             sig = query.get("sig", [""])[0].strip()
 
@@ -444,12 +507,21 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
 
         try:
             body = self._parse_json_body()
+        except BufferError as e:
+            self._send_error_json(str(e), 413)
+            return
         except ValueError:
             self._send_error_json("Payload JSON tidak valid", 400)
             return
 
+        client_ip = self._get_client_ip()
+
         # 1. API: Otentikasi Masuk Pengguna
         if path == "/api/auth/login":
+            if not RATE_LIMITER.is_allowed(f"login:{client_ip}", max_requests=10, window_seconds=60):
+                self._send_error_json("Terlalu banyak percobaan masuk (Rate Limit Exceeded). Harap tunggu 1 menit.", 429)
+                return
+
             username = body.get("username", "").strip()
             password = body.get("password", "")
             if not username or not password:
@@ -475,6 +547,10 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
 
         # 2. API: Simulasi Mandiri (Kalkulator Petani - Tanpa Sertifikat Resmi)
         if path == "/api/simulate":
+            if not RATE_LIMITER.is_allowed(f"simulate:{client_ip}", max_requests=60, window_seconds=60):
+                self._send_error_json("Batas laju simulasi mandiri terlampaui. Harap tunggu beberapa saat.", 429)
+                return
+
             try:
                 ka = float(body.get("kadar_air", 0.0))
                 bp = float(body.get("butir_patah", 0.0))
@@ -522,6 +598,10 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
 
         # 2b. API: Analisis Citra Beras (Computer Vision)
         if path == "/api/cv/analyze":
+            if not RATE_LIMITER.is_allowed(f"cv:{client_ip}", max_requests=30, window_seconds=60):
+                self._send_error_json("Batas laju analisis citra terlampaui. Harap tunggu beberapa saat.", 429)
+                return
+
             img_b64 = body.get("image_base64", "")
             use_demo = body.get("demo", False)
             ka = float(body.get("kadar_air", 13.5))
@@ -592,6 +672,10 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
 
         # 3. API: Petani Mengajukan Sampel Batch (Maker)
         if path == "/api/submissions":
+            if not RATE_LIMITER.is_allowed(f"submit:{client_ip}", max_requests=30, window_seconds=60):
+                self._send_error_json("Batas laju pengajuan batch terlampaui. Harap tunggu beberapa saat.", 429)
+                return
+
             petani_id = body.get("petani_id", 1)
             petani_nama = body.get("petani_nama", "").strip()
             petani_nik = body.get("petani_nik", "").strip()
@@ -657,6 +741,10 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
 
         # 4. API: Analis Lab Memverifikasi & Menerbitkan Sertifikat (Checker & Verifier)
         if path.startswith("/api/submissions/") and path.endswith("/verify"):
+            if not RATE_LIMITER.is_allowed(f"verify_issue:{client_ip}", max_requests=30, window_seconds=60):
+                self._send_error_json("Batas laju penerbitan sertifikat terlampaui. Harap tunggu beberapa saat.", 429)
+                return
+
             sub_id = path.split("/")[3]
             if not _is_safe_id(sub_id):
                 self._send_error_json("Format ID pengajuan tidak valid.", 400)

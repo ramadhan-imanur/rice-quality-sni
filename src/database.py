@@ -25,10 +25,21 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional, Tuple
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFAULT_DB_PATH = os.path.join(CURRENT_DIR, "data", "rice_sni.db")
-SECRET_KEY = os.environ.get(
-    "SNI_SECRET_KEY", "UNS_FMIPA_MATEMATIKA_SNI_6128_2020_SECRET_KEY_M0124015"
-).encode("utf-8")
+PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
+DEFAULT_DB_PATH = os.path.join(PROJECT_ROOT, "data", "rice_sni.db")
+
+_env_key = os.environ.get("SNI_SECRET_KEY")
+_app_env = os.environ.get("APP_ENV", os.environ.get("NODE_ENV", "development")).lower()
+
+if _env_key:
+    SECRET_KEY = _env_key.encode("utf-8")
+elif _app_env == "production":
+    import logging
+    logging.warning("PERINGATAN KEAMANAN: SNI_SECRET_KEY tidak disetel di lingkungan produksi! Menghasilkan kunci acak runtime.")
+    SECRET_KEY = secrets.token_bytes(32)
+else:
+    # Development / testing fallback
+    SECRET_KEY = b"UNS_FMIPA_MATEMATIKA_SNI_6128_2020_SECRET_KEY_M0124015"
 
 
 def get_db_connection(db_path: str = DEFAULT_DB_PATH) -> sqlite3.Connection:
@@ -235,6 +246,17 @@ def init_db(db_path: str = DEFAULT_DB_PATH) -> None:
         );
         """
     )
+
+    # 5. Indeks Kinerja & Foreign Key Lookups
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_submissions_petani_id ON submissions(petani_id);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_submissions_status ON submissions(status);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_submissions_created_at ON submissions(created_at);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_certificates_analis_id ON certificates(analis_id);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_certificates_petani_nik ON certificates(petani_nik);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_certificates_created_at ON certificates(created_at);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_certificates_signature ON certificates(signature_hmac);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_audit_logs_timestamp ON audit_logs(timestamp);")
+    cur.execute("CREATE INDEX IF NOT EXISTS idx_audit_logs_entity ON audit_logs(entity_type, entity_id);")
 
     # Data Benih Awal (Seeding Demo Users)
     demo_users = [
