@@ -129,13 +129,21 @@
       if (!file) return;
 
       const reader = new FileReader();
-      setButtonLoading(btnTrigger, true, "⏳ Memproses Citra...");
+      setButtonLoading(
+        btnTrigger,
+        true,
+        '<svg class="spinning" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Memproses Citra...'
+      );
       reader.onload = function (e) {
         const base64Data = e.target.result;
         sendCvAnalysis(base64Data, file.name);
       };
       reader.onerror = function () {
-        setButtonLoading(btnTrigger, false, "📸 Ambil Foto / Unggah Citra");
+        setButtonLoading(
+          btnTrigger,
+          false,
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ambil Foto / Unggah Citra'
+        );
         alert("Gagal membaca file gambar.");
       };
       reader.readAsDataURL(file);
@@ -143,7 +151,11 @@
 
     if (btnDemo) {
       btnDemo.addEventListener("click", function () {
-        setButtonLoading(btnDemo, true, "⏳ Menyiapkan Sampel Demo...");
+        setButtonLoading(
+          btnDemo,
+          true,
+          '<svg class="spinning" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Menyiapkan Sampel Demo...'
+        );
         sendCvAnalysis(null, "Sampel Demo Butir Beras");
       });
     }
@@ -158,12 +170,12 @@
       });
     }
 
-    function setButtonLoading(btn, isLoading, text) {
+    function setButtonLoading(btn, isLoading, contentHtml) {
       if (!btn) return;
       btn.disabled = isLoading;
       if (btnDemo) btnDemo.disabled = isLoading;
       if (btnTrigger) btnTrigger.disabled = isLoading;
-      btn.textContent = text;
+      btn.innerHTML = contentHtml;
     }
 
     function sendCvAnalysis(base64Data, sampleName) {
@@ -192,8 +204,17 @@
           alert("Galat Computer Vision: " + err.message);
         })
         .finally(() => {
-          setButtonLoading(btnTrigger, false, "📸 Ambil Foto / Unggah Citra");
-          if (btnDemo) setButtonLoading(btnDemo, false, "✨ Coba Sampel Demo");
+          setButtonLoading(
+            btnTrigger,
+            false,
+            '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ambil Foto / Unggah Citra'
+          );
+          if (btnDemo)
+            setButtonLoading(
+              btnDemo,
+              false,
+              '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:4px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Coba Sampel Demo'
+            );
         });
     }
 
@@ -354,16 +375,16 @@
     titleEl.textContent = "MUTU " + label.toUpperCase();
 
     if (kelas === "PREMIUM") {
-      iconEl.textContent = "✓";
+      iconEl.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
       descEl.textContent = "Beras Anda memenuhi seluruh ambang batas mutu tertinggi SNI 6128:2020.";
     } else if (kelas === "MEDIUM_I") {
-      iconEl.textContent = "i";
+      iconEl.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
       descEl.textContent = "Beras Anda memenuhi standar baku kelas Mutu Medium I.";
     } else if (kelas === "MEDIUM_II") {
-      iconEl.textContent = "!";
+      iconEl.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
       descEl.textContent = "Beras Anda memenuhi standar baku kelas Mutu Medium II.";
     } else {
-      iconEl.textContent = "✕";
+      iconEl.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
       descEl.textContent = "Beras melampaui batas toleransi mutu fisik Medium II atau berkadar air basah (> 14%).";
     }
 
@@ -567,12 +588,14 @@
             <td>
               <div class="btn-action-group">
                 <a href="/api/submissions/${encodeURIComponent(s.id)}/label" target="_blank" class="btn btn-xs btn-outline">
-                  🏷 Cetak Label
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:3px;" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                  Cetak Label
                 </a>
                 ${
                   s.status === "VERIFIED" && s.nomor_sertifikat
                     ? `<a href="/api/certificates/${encodeURIComponent(s.nomor_sertifikat)}/download" target="_blank" class="btn btn-xs btn-success">
-                        📜 Lembar Taksasi
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:3px;" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                        Lembar Taksasi
                       </a>`
                     : ""
                 }
@@ -661,7 +684,8 @@
             <td><span class="badge-status pending">PENDING</span></td>
             <td>
               <button type="button" class="btn btn-xs btn-primary btn-open-test" data-id="${s.id}" data-nama="${escapeHtml(s.petani_nama)}" data-varietas="${escapeHtml(s.varietas_padi)}" data-tonase="${s.tonase_kg}">
-                🔬 Uji Sampel Lab
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:3px;" aria-hidden="true"><path d="M10 2v7.31L4.54 18.5A2 2 0 0 0 6.27 21h11.46a2 2 0 0 0 1.73-2.5L14 9.31V2"/><line x1="8.5" y1="2" x2="15.5" y2="2"/><line x1="7" y1="14" x2="17" y2="14"/></svg>
+                Uji Sampel Lab
               </button>
             </td>
           </tr>
@@ -781,10 +805,12 @@
         <td>
           <div class="btn-action-group">
             <a href="${c.qr_url || `/verify.html?id=${encodeURIComponent(c.nomor_sertifikat)}&sig=${encodeURIComponent(c.signature_hmac)}`}" target="_blank" class="btn btn-xs btn-outline">
-              🔍 Cek Keaslian
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:3px;" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Cek Keaslian
             </a>
             <a href="/api/certificates/${encodeURIComponent(c.nomor_sertifikat)}/download" target="_blank" class="btn btn-xs btn-success">
-              📥 Unduh PDF
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle; margin-right:3px;" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Unduh PDF
             </a>
           </div>
         </td>

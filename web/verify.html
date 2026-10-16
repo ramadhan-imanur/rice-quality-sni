@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <style>
     .verify-container {
@@ -212,7 +213,9 @@
     <div id="verify-result" style="display: none;">
       <!-- BANNER STATUS -->
       <div id="status-banner" class="status-banner">
-        <div class="status-icon" id="status-icon">✓</div>
+        <div class="status-icon" id="status-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
         <div>
           <div class="status-title" id="status-title">LEMBAR TAKSASI SAH & TERDAFTAR RESMI</div>
           <p id="status-desc">Dokumen ini terdaftar secara sah dalam server basis data pengujian mutu & taksasi harga beras.</p>
@@ -397,7 +400,7 @@
 
         if (data.valid && data.certificate) {
           banner.classList.add("valid");
-          icon.textContent = "✓";
+          icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
           title.textContent = "LEMBAR TAKSASI SAH & TERDAFTAR DI DATABASE";
           desc.textContent = data.message;
           detailBlock.style.display = "grid";
@@ -452,13 +455,13 @@
           `;
         } else if (data.status === "TAMPERED") {
           banner.classList.add("tampered");
-          icon.textContent = "⚠";
+          icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
           title.textContent = "PERINGATAN! DOKUMEN DIDUGA TELAH DIMANIPULASI";
           desc.textContent = data.message;
           detailBlock.style.display = "none";
         } else {
           banner.classList.add("not_found");
-          icon.textContent = "✕";
+          icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
           title.textContent = "LEMBAR TAKSASI TIDAK TERDAFTAR";
           desc.textContent = data.message || "Nomor taksasi tidak ditemukan dalam arsip database resmi.";
           detailBlock.style.display = "none";
