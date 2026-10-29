@@ -64,7 +64,11 @@ from quality_engine import (
 
 PORT = int(os.environ.get("PORT", 8000))
 WEB_DIR = os.path.join(PROJECT_ROOT, "web")
-OUTPUT_DIR = os.path.join(PROJECT_ROOT, "output")
+if os.environ.get("VERCEL"):
+    OUTPUT_DIR = "/tmp/output"
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+else:
+    OUTPUT_DIR = os.path.join(PROJECT_ROOT, "output")
 MAX_PAYLOAD_SIZE = 15 * 1024 * 1024  # Maksimum payload 15 MB (DoS Guard)
 
 
@@ -227,6 +231,15 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
         parsed_url = urllib.parse.urlparse(self.path)
         path = parsed_url.path
         query = urllib.parse.parse_qs(parsed_url.query)
+
+        # Deteksi path jika dijalankan di balik reverse proxy / Vercel rewrite
+        if path in ("/api", "/api/", "/api/index.py", "/api/index"):
+            proxy_path = self.headers.get("x-matched-path") or self.headers.get("x-invoke-path")
+            if proxy_path and proxy_path not in ("/api", "/api/", "/api/index.py", "/api/index"):
+                parsed_proxy = urllib.parse.urlparse(proxy_path)
+                path = parsed_proxy.path
+                if parsed_proxy.query:
+                    query.update(urllib.parse.parse_qs(parsed_proxy.query))
 
         # 1. API: Cek Keaslian Sertifikat (Public Anti-Fraud Verification)
         if path == "/api/verify":
@@ -504,6 +517,12 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self) -> None:
         parsed_url = urllib.parse.urlparse(self.path)
         path = parsed_url.path
+
+        # Deteksi path jika dijalankan di balik reverse proxy / Vercel rewrite
+        if path in ("/api", "/api/", "/api/index.py", "/api/index"):
+            proxy_path = self.headers.get("x-matched-path") or self.headers.get("x-invoke-path")
+            if proxy_path and proxy_path not in ("/api", "/api/", "/api/index.py", "/api/index"):
+                path = urllib.parse.urlparse(proxy_path).path
 
         try:
             body = self._parse_json_body()

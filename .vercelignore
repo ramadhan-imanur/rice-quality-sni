@@ -1,0 +1,15 @@
+# Vercel Deployment Ignore Rules
+tests/
+scripts/
+output/
+data/*.db-journal
+data/*.db-wal
+.pytest_cache/
+__pycache__/
+*.pyc
+*.pyo
+.env
+.git
+.github
+Makefile
+playwright.config.js

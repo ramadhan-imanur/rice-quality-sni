@@ -26,7 +26,19 @@ from typing import Any, Dict, List, Optional, Tuple
 
 CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
-DEFAULT_DB_PATH = os.path.join(PROJECT_ROOT, "data", "rice_sni.db")
+
+if os.environ.get("VERCEL"):
+    DEFAULT_DB_PATH = "/tmp/rice_sni.db"
+    source_db = os.path.join(PROJECT_ROOT, "data", "rice_sni.db")
+    if not os.path.exists(DEFAULT_DB_PATH):
+        try:
+            if os.path.exists(source_db):
+                import shutil
+                shutil.copy2(source_db, DEFAULT_DB_PATH)
+        except Exception:
+            pass
+else:
+    DEFAULT_DB_PATH = os.path.join(PROJECT_ROOT, "data", "rice_sni.db")
 
 _env_key = os.environ.get("SNI_SECRET_KEY")
 _app_env = os.environ.get("APP_ENV", os.environ.get("NODE_ENV", "development")).lower()

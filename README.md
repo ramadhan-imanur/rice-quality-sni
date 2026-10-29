@@ -16,7 +16,6 @@ Sistem beroperasi **100% luring (*offline-first*)**, tanpa dependensi pustaka pi
 
 ## Daftar Isi
 - [Fitur Utama](#fitur-utama)
-- [Struktur Repositori](#struktur-repositori)
 - [Landasan Aturan & Logika Keputusan](#landasan-aturan--logika-keputusan)
   - [A. Batas Toleransi Mutu SNI 6128:2020](#a-tabel-batas-toleransi-baku-sni-61282020)
   - [B. Formula Penyesuaian Harga Bapanas No. 67/2024](#b-formula-penyesuaian-harga-resmi-bapanas-no-672024)
@@ -49,63 +48,6 @@ Sistem beroperasi **100% luring (*offline-first*)**, tanpa dependensi pustaka pi
 4. **Antarmuka Baris Perintah Interaktif & Otomasi (`cli.py`):**
    - Modus wizard interaktif ramah pemula atau eksekusi *one-liner flag* untuk integrasi skrip.
 
----
-
-## Struktur Repositori (Standard Industry src/ Layout)
-
-```text
-code/
-├── src/                          # Paket sumber kode inti (Domain & Application Logic)
-│   ├── __init__.py               # Deklarasi paket & re-ekspor API publik
-│   ├── quality_engine.py         # Domain Core: Aturan SNI 6128:2020, klasifikasi O(1), penyesuaian Bapanas
-│   ├── cv_engine.py              # Computer Vision: Otsu segmentation, tensor inersia orde-2, filter butir
-│   ├── database.py               # Data Persistence: SQLite, PBKDF2 hashing, HMAC-SHA256, Audit logs
-│   ├── pdf_generator.py          # Document Service: Raw PDF 1.4, vektor QR ISO/IEC 18004, stempel digital
-│   ├── qr_codec.py               # Security Codec: Matriks QR Code mandiri tanpa dependensi pihak ketiga
-│   ├── api_server.py             # HTTP Gateway: Multithreaded REST API & peladen berkas statis
-│   └── cli.py                    # Terminal Interface: Wizard interaktif & eksekusi one-liner script
-├── web/                          # Klien antarmuka web responsif (< 85 KB, offline-first)
-│   ├── index.html                # Single-Page App: 4 Tab (Simulasi/CV, Maker, Checker, Arsip)
-│   ├── verify.html               # Portal publik verifikasi integritas taksasi
-│   ├── style.css                 # Desain UI agritech, deteksi preview, traffic-light gauges
-│   └── app.js                    # Pengendali kamera CV, tab, REST API fetch, & visualisasi
-├── scripts/                      # Skrip otomasi, tolok ukur, & utilitas pengembang
-│   ├── benchmark_performance.py  # Tolok ukur latensi (perf_counter) & RAM (tracemalloc)
-│   ├── run_tests.sh              # Skrip runner otomatis untuk seluruh 39 unit test & benchmark
-│   └── run_e2e_tests.sh          # Skrip runner otomatis untuk suite pengujian browser Playwright
-├── tests/                        # Suite pengujian komprehensif
-│   ├── __init__.py
-│   ├── unit/                     # 39 Pengujian unit deterministik & audit keamanan
-│   │   ├── __init__.py
-│   │   ├── test_quality_engine.py# 20 kasus batas toleransi SNI
-│   │   ├── test_maker_checker.py # 6 skenario alur Maker-Checker & Anti-Fraud HMAC
-│   │   ├── test_cv_engine.py     # 6 skenario segmentasi & akurasi dimensi butir CV
-│   │   └── test_security_hardened.py # 7 skenario audit keamanan (OWASP, DoS, Rate Limit, UU PDP)
-│   └── e2e/                      # Pengujian End-to-End browser Playwright (Multi-Viewport)
-│       ├── pages/                # Page Object Models (Dashboard, Maker, Checker, Verify)
-│       ├── test_app_flows.spec.js# 18 pengujian E2E (Desktop 1280px & Mobile 375px)
-│       ├── capture_screenshots.js# Utilitas dokumentasi visual
-│       └── screenshots/          # Tangkapan layar otomatis antarmuka
-├── data/                         # Basis data & berkas persistensi
-│   ├── rice_sni.db               # Basis data SQLite terpusat untuk integritas lembar taksasi
-│   └── lab_samples.json          # Basis data riwayat pengujian sampel format JSON
-├── docs/                         # Spesifikasi teknis & dokumentasi sistem
-│   ├── ARCHITECTURE.md           # Peta arsitektur & panduan direktori pengembang
-│   └── DESIGN.md                 # Pedoman desain UI/UX agritech & token palet
-├── output/                       # Direktori keluaran berkas PDF taksasi lokal & label pengantar
-│   └── .gitkeep                  # Menjaga direktori tetap terlacak di Git
-├── supabase/                     # Skema migrasi komputasi awan (PostgreSQL)
-│   └── migrations/
-│       ├── 20261016_init_rls.sql # Skema RLS dasar & fungsi verifikasi publik
-│       └── 20261016_hardening.sql# Optimasi RLS JWT Metadata, Indeks Komposit, & Trigger Audit
-├── .env.example                  # Templat konfigurasi lingkungan produksi
-├── Makefile                      # Task runner pengembang (make test, make run, dll.)
-├── pyproject.toml                # Standar konfigurasi proyek Python & pytest
-├── requirements.txt              # Spesifikasi dependensi Python
-├── package.json                  # Dependensi Node.js / Playwright
-├── playwright.config.js          # Konfigurasi pengujian browser multi-viewport
-└── README.md                     # Gerbang dokumentasi utama repositori
-```
 ---
 
 ## Landasan Aturan & Logika Keputusan
