@@ -635,10 +635,21 @@ body {
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* Hilangkan spinner bawaan browser pada input angka agar tampilan bersih & native */
+.input-control[type="number"]::-webkit-outer-spin-button,
+.input-control[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .input-control[type="number"],
 .input-control.font-mono {
   font-family: var(--font-mono);
   font-weight: 700;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .input-control:focus {
@@ -660,14 +671,28 @@ textarea:focus-visible,
   outline-offset: 2px !important;
 }
 
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-wrapper .input-control {
+  padding-right: 2.25rem;
+}
+
 .unit-suffix {
   position: absolute;
   right: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
   color: var(--color-soil-sub);
   font-family: var(--font-mono);
   font-size: 0.875rem;
   font-weight: 700;
   pointer-events: none;
+  user-select: none;
 }
 
 .field-hint {
