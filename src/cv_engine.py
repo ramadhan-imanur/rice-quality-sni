@@ -100,6 +100,10 @@ def _calculate_inertia_dimensions(mask: np.ndarray) -> Tuple[float, float, float
     return length, width, aspect_ratio, float(area)
 
 
+# Proteksi DoS Memori: Batas piksel dekompresi Pillow (CWE-400 / Decompression Bomb Guard)
+Image.MAX_IMAGE_PIXELS = 25_000_000
+
+
 def analyze_rice_image(
     image_input: Union[str, bytes, Image.Image],
     coin_diameter_mm: Optional[float] = None,
@@ -110,17 +114,23 @@ def analyze_rice_image(
     Menganalisis citra beras pada latar belakang gelap untuk menghitung
     parameter fisik Butir Kepala, Butir Patah, Butir Menir, dan Benda Asing.
     """
-    # 1. Buka Citra
-    if isinstance(image_input, str):
-        with Image.open(image_input) as _f:
-            img = _f.convert("RGB")
-    elif isinstance(image_input, bytes):
-        with Image.open(io.BytesIO(image_input)) as _f:
-            img = _f.convert("RGB")
-    elif isinstance(image_input, Image.Image):
-        img = image_input.convert("RGB")
-    else:
-        raise TypeError("Format masukan citra tidak didukung.")
+    # 1. Buka Citra dengan pelindung batas dekompresi
+    try:
+        if isinstance(image_input, str):
+            with Image.open(image_input) as _f:
+                img = _f.convert("RGB")
+        elif isinstance(image_input, bytes):
+            with Image.open(io.BytesIO(image_input)) as _f:
+                img = _f.convert("RGB")
+        elif isinstance(image_input, Image.Image):
+            img = image_input.convert("RGB")
+        else:
+            raise TypeError("Format masukan citra tidak didukung.")
+    except Image.DecompressionBombError:
+        return {
+            "success": False,
+            "error": "Ukuran citra melampaui batas aman dekompresi (Decompression Bomb Protection).",
+        }
 
     # Skala jika gambar terlalu besar (> 1200px) agar responsif
     orig_w, orig_h = img.size

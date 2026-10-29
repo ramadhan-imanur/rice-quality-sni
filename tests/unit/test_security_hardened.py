@@ -134,6 +134,24 @@ class TestSecurityHardening(unittest.TestCase):
         self.assertTrue(verify_password(pwd, h2))
         self.assertFalse(verify_password("PasswordSalah", h1))
 
+    def test_08_cv_engine_decompression_bomb_guard(self):
+        """Memverifikasi batas piksel dekompresi Pillow (CWE-400 / Decompression Bomb Guard)."""
+        from PIL import Image
+        from src.cv_engine import analyze_rice_image
+        self.assertLessEqual(Image.MAX_IMAGE_PIXELS, 25_000_000)
+
+    def test_09_database_security_pragmas(self):
+        """Memverifikasi penegakan PRAGMA foreign_keys dan secure_delete pada koneksi SQLite."""
+        import tempfile
+        from src.database import get_db_connection
+        with tempfile.NamedTemporaryFile(suffix=".db") as tmp:
+            conn = get_db_connection(tmp.name)
+            fk = conn.execute("PRAGMA foreign_keys;").fetchone()[0]
+            sd = conn.execute("PRAGMA secure_delete;").fetchone()[0]
+            conn.close()
+            self.assertEqual(fk, 1)
+            self.assertEqual(sd, 1)
+
 
 if __name__ == "__main__":
     unittest.main()

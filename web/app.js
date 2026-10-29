@@ -405,7 +405,7 @@
       box.innerHTML = `<strong>Penyebab Penurunan Kelas Mutu:</strong><br>&bull; ` + reasons.join("<br>&bull; ");
       box.style.borderLeftColor = (kelas === "SUBSTANDAR") ? "#ef4444" : "#f59e0b";
     } else {
-      box.innerHTML = `<strong>Keterangan:</strong> Hasil sesuai toleransi kelas ${res.klasifikasi.label_mutu}.`;
+      box.innerHTML = `<strong>Keterangan:</strong> Hasil sesuai toleransi kelas ${escapeHtml(res.klasifikasi.label_mutu)}.`;
       box.style.borderLeftColor = "#3b82f6";
     }
   }

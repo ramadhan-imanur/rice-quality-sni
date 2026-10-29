@@ -584,7 +584,8 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
                 bp = float(body.get("butir_patah", 0.0))
                 mn = float(body.get("butir_menir", 0.0))
                 ba = float(body.get("benda_asing", 0.0))
-                sample_name = body.get("sample_id", "Simulasi Mandiri")
+                raw_name = str(body.get("sample_id", "Simulasi Mandiri")).strip()
+                sample_name = raw_name[:80] if raw_name else "Simulasi Mandiri"
             except (ValueError, TypeError):
                 self._send_error_json("Masukan 4 parameter harus berupa angka valid.", 400)
                 return
@@ -704,7 +705,11 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
                 self._send_error_json("Batas laju pengajuan batch terlampaui. Harap tunggu beberapa saat.", 429)
                 return
 
-            petani_id = body.get("petani_id", 1)
+            auth_user = self._get_authenticated_user()
+            if auth_user:
+                petani_id = auth_user["user_id"]
+            else:
+                petani_id = int(body.get("petani_id", 1))
             petani_nama = body.get("petani_nama", "").strip()
             petani_nik = body.get("petani_nik", "").strip()
             kontak = body.get("kontak", "").strip()
@@ -779,13 +784,15 @@ class RiceQualityAPIHandler(http.server.SimpleHTTPRequestHandler):
                 return
 
             auth_user = self._get_authenticated_user()
-            if auth_user:
-                if auth_user["role"] not in ("analis_lab", "admin"):
-                    self._send_error_json("Akses ditolak: Hanya Analis Laboratorium yang berwenang menerbitkan taksasi.", 403)
-                    return
-                analis_id = auth_user["user_id"]
-            else:
-                analis_id = int(body.get("analis_id", 2))
+            if not auth_user:
+                self._send_error_json("Akses ditolak: Otentikasi token sesi (Bearer / X-Session-Token) diperlukan.", 401)
+                return
+
+            if auth_user["role"] not in ("analis_lab", "admin"):
+                self._send_error_json("Akses ditolak: Hanya Analis Laboratorium atau Administrator yang berwenang menerbitkan taksasi.", 403)
+                return
+
+            analis_id = auth_user["user_id"]
 
             conn = get_db_connection()
             cur = conn.cursor()

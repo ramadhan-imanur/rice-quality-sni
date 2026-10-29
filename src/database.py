@@ -41,7 +41,10 @@ else:
     DEFAULT_DB_PATH = os.path.join(PROJECT_ROOT, "data", "rice_sni.db")
 
 _env_key = os.environ.get("SNI_SECRET_KEY")
-_app_env = os.environ.get("APP_ENV", os.environ.get("NODE_ENV", "development")).lower()
+_app_env = os.environ.get(
+    "APP_ENV",
+    os.environ.get("ENVIRONMENT", "production" if os.environ.get("VERCEL") else os.environ.get("NODE_ENV", "development")),
+).lower()
 
 if _env_key:
     SECRET_KEY = _env_key.encode("utf-8")
@@ -55,11 +58,12 @@ else:
 
 
 def get_db_connection(db_path: str = DEFAULT_DB_PATH) -> sqlite3.Connection:
-    """Membuka koneksi SQLite dengan row_factory dictionary."""
+    """Membuka koneksi SQLite dengan row_factory dictionary & pengaturan keamanan."""
     os.makedirs(os.path.dirname(db_path), exist_ok=True)
     conn = sqlite3.connect(db_path)
     conn.row_factory = sqlite3.Row
     conn.execute("PRAGMA foreign_keys = ON;")
+    conn.execute("PRAGMA secure_delete = ON;")
     return conn
 
 
