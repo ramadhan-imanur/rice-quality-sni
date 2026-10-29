@@ -4,35 +4,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "/api/index.py"
-    },
-    {
-      "source": "/verify",
-      "destination": "/web/verify.html"
-    },
-    {
-      "source": "/verify.html",
-      "destination": "/web/verify.html"
-    },
-    {
-      "source": "/style.css",
-      "destination": "/web/style.css"
-    },
-    {
-      "source": "/app.js",
-      "destination": "/web/app.js"
-    },
-    {
-      "source": "/",
-      "destination": "/web/index.html"
-    },
-    {
-      "source": "/index.html",
-      "destination": "/web/index.html"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/web/:path*"
+      "destination": "/api/index.py?path=:path*"
     }
   ]
 }

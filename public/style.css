@@ -1,0 +1,1268 @@
+/* ==========================================================================
+   STYLE.CSS — High-Trust Modern Agritech & Sovereign Grain Standard
+   Sistem Taksasi Mutu Beras Digital SNI 6128:2020 & Anti-Fraud Valuation Engine
+   Offline-First Architecture | WCAG 2.1 AAA Contrast | Print-First A4 Ready
+   ========================================================================== */
+
+:root {
+  /* Tipografi Desain Sistem Agritech */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Space Grotesk', ui-monospace, SFMono-Regular, monospace;
+
+  /* Palet Warna Agronomi Terkalibrasi (Sovereign Grain Standard) */
+  --color-forest-deep: #0B3B2C;      /* Brand authority, top bar, header canvas */
+  --color-forest-surface: #114B39;   /* Secondary forest, interactive highlight */
+  --color-forest-dark: #07261C;      /* Deepest tone for maximum contrast */
+  --color-emerald-accent: #059669;   /* Verified state, primary CTA, camera reticle */
+  --color-emerald-hover: #047857;    /* Button hover state */
+  --color-emerald-subtle: #DCFCE7;   /* Premium badge background */
+  
+  --color-gold-grain: #D97706;       /* Harvest gold, pricing highlight */
+  --color-gold-warm: #F59E0B;        /* Medium II warning, refaksi tag */
+  --color-gold-subtle: #FEF3C7;      /* Amber badge background */
+
+  --color-husk-canvas: #F8FAF6;      /* Clean warm rice husk canvas (anti-glare) */
+  --color-husk-surface: #FFFFFF;     /* Elevated card background */
+  --color-husk-muted: #EDF2EB;       /* Subdued background, track, inactive pill */
+  
+  --color-soil-slate: #14221B;       /* Primary text: organic high-contrast slate (14.2:1) */
+  --color-soil-sub: #3A4D43;         /* Secondary text, field descriptions (7.1:1) */
+  --color-border-subtle: #D1DCD3;    /* Structural borders, card boundaries */
+  --color-border-strong: #8EA898;    /* Active focus borders, input emphasis */
+
+  /* Status Spektrum SNI 6128:2020 */
+  --badge-premium-bg: #DCFCE7;
+  --badge-premium-text: #065F46;
+  --badge-premium-border: #059669;
+
+  --badge-med1-bg: #DBEAFE;
+  --badge-med1-text: #1E40AF;
+  --badge-med1-border: #3B82F6;
+
+  --badge-med2-bg: #FEF3C7;
+  --badge-med2-text: #92400E;
+  --badge-med2-border: #F59E0B;
+
+  --badge-sub-bg: #FEE2E2;
+  --badge-sub-text: #991B1B;
+  --badge-sub-border: #DC2626;
+
+  /* Backward Compatibility Aliases */
+  --primary: var(--color-emerald-accent);
+  --primary-hover: var(--color-emerald-hover);
+  --primary-light: var(--color-emerald-subtle);
+  --color-bg: var(--color-husk-canvas);
+  --color-surface: var(--color-husk-surface);
+  --color-border: var(--color-border-subtle);
+  --color-border-dark: var(--color-border-strong);
+  --color-text: var(--color-soil-slate);
+  --color-text-muted: var(--color-soil-sub);
+  --color-text-sub: var(--color-soil-sub);
+
+  /* Radius & Shadows */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 3px rgba(20, 34, 27, 0.06), 0 1px 2px rgba(20, 34, 27, 0.04);
+  --shadow-md: 0 4px 12px -2px rgba(20, 34, 27, 0.08), 0 2px 6px -1px rgba(20, 34, 27, 0.04);
+  --shadow-lg: 0 12px 28px -4px rgba(20, 34, 27, 0.12), 0 4px 12px -2px rgba(20, 34, 27, 0.06);
+}
+
+/* Reset Dasar */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-husk-canvas);
+  color: var(--color-soil-slate);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+/* ==========================================================================
+   1. HEADER APLIKASI (SOVEREIGN INSTITUTIONAL IDENTITY)
+   ========================================================================== */
+.app-header {
+  background: linear-gradient(135deg, var(--color-forest-deep) 0%, var(--color-forest-dark) 100%);
+  color: #FFFFFF;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 3px solid var(--color-emerald-accent);
+  box-shadow: 0 4px 20px rgba(11, 59, 44, 0.25);
+  position: relative;
+  z-index: 20;
+}
+
+.header-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-logo {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 0.65rem;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  color: #A7F3D0;
+}
+
+.brand h1 {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: #FFFFFF;
+  line-height: 1.25;
+}
+
+.subtitle {
+  font-size: 0.8125rem;
+  color: #A7F3D0;
+  margin-top: 0.2rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.header-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pill-outline {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+}
+
+.pill-outline:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.pill-accent {
+  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  color: #FFFFFF;
+  font-weight: 800;
+  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* ==========================================================================
+   2. SEGMENTED TAB NAVIGATION
+   ========================================================================== */
+.app-nav-wrapper {
+  background-color: var(--color-forest-surface);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  z-index: 15;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-nav-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+  gap: 0.4rem;
+  padding: 0.4rem 1.5rem 0 1.5rem;
+  scrollbar-width: none;
+}
+
+.app-nav-container::-webkit-scrollbar {
+  display: none;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: #D1DCD3;
+  padding: 0.75rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  position: relative;
+}
+
+.tab-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+.tab-btn.active {
+  background-color: var(--color-husk-canvas);
+  color: var(--color-forest-deep);
+  font-weight: 700;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.tab-btn.active::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: var(--color-emerald-accent);
+  border-radius: 3px 3px 0 0;
+}
+
+.tab-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+  vertical-align: middle;
+  color: inherit;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+.tab-btn:hover .tab-icon {
+  transform: translateY(-1px);
+}
+
+.tab-btn.active .tab-icon {
+  color: var(--color-emerald-accent);
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 1.25rem;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: 'liga';
+  vertical-align: middle;
+}
+
+@keyframes spin-icon {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.spinning {
+  animation: spin-icon 1s linear infinite;
+  display: inline-block;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: tabFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes tabFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   3. LAYOUT & GRID ARCHITECTURE
+   ========================================================================== */
+.main-layout {
+  max-width: 1280px;
+  margin: 1.5rem auto 3rem auto;
+  padding: 0 1.25rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  .content-grid {
+    grid-template-columns: 1.05fr 1fr;
+    align-items: start;
+  }
+}
+
+/* KARTU CONTAINER */
+.card {
+  background-color: var(--color-husk-surface);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  border-color: #B5C7B8;
+  box-shadow: var(--shadow-md);
+}
+
+.card-header {
+  border-bottom: 1.5px solid var(--color-husk-muted);
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.card-header h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-forest-deep);
+  letter-spacing: -0.01em;
+}
+
+.card-sub {
+  font-size: 0.8125rem;
+  color: var(--color-soil-sub);
+  margin-top: 0.25rem;
+  width: 100%;
+  line-height: 1.45;
+}
+
+/* DISCLAIMER NON-KAN BANNER */
+.sim-alert-banner {
+  background: #FFFBEB;
+  border: 1.5px solid #FDE68A;
+  border-left: 5px solid #D97706;
+  padding: 0.95rem 1.25rem;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-size: 0.8375rem;
+  color: #78350F;
+  line-height: 1.5;
+  box-shadow: var(--shadow-sm);
+}
+
+.sim-alert-banner strong {
+  color: #92400E;
+  font-weight: 700;
+  display: inline-block;
+  margin-right: 0.25rem;
+}
+
+/* ==========================================================================
+   4. COMPUTER VISION OPTICAL SORTING CARD (#cv-card)
+   ========================================================================== */
+.cv-card {
+  background: var(--color-husk-surface);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+.cv-instructions {
+  background: #F0FDF4;
+  border-left: 4px solid var(--color-emerald-accent);
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-xs);
+  font-size: 0.8125rem;
+  color: #065F46;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  line-height: 1.45;
+}
+
+.cv-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+  background: #0B1914;
+  border: 2px solid #1B382D;
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  min-height: 220px;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Optical Reticle Crosshairs */
+.cv-preview-container::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 24px;
+  height: 24px;
+  border-top: 2px solid var(--color-gold-warm);
+  border-left: 2px solid var(--color-gold-warm);
+  pointer-events: none;
+}
+
+.cv-preview-container::after {
+  content: "";
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 24px;
+  height: 24px;
+  border-bottom: 2px solid var(--color-gold-warm);
+  border-right: 2px solid var(--color-gold-warm);
+  pointer-events: none;
+}
+
+.cv-preview-img {
+  max-width: 100%;
+  max-height: 380px;
+  border-radius: var(--radius-xs);
+  object-fit: contain;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cv-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.65rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.cv-stat-box {
+  background: var(--color-husk-surface);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.85rem;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+}
+
+.cv-stat-label {
+  font-size: 0.7rem;
+  color: var(--color-soil-sub);
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.cv-stat-val {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-soil-slate);
+  margin-top: 0.15rem;
+}
+
+.cv-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-full);
+}
+
+.cv-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #EDF2EB;
+}
+
+.cv-legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   5. CALIBRATION PRESETS & FORM INPUTS
+   ========================================================================== */
+.preset-section {
+  background-color: var(--color-husk-muted);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.section-label {
+  display: block;
+  font-size: 0.725rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-forest-deep);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.04em;
+}
+
+.preset-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.btn-chip {
+  background-color: var(--color-husk-surface);
+  border: 1.5px solid var(--color-border-subtle);
+  color: var(--color-soil-slate);
+  font-family: var(--font-sans);
+  font-size: 0.775rem;
+  font-weight: 600;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.btn-chip:hover {
+  background-color: var(--color-forest-deep);
+  border-color: var(--color-forest-deep);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.form-group {
+  margin-bottom: 1.15rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--color-soil-slate);
+  margin-bottom: 0.4rem;
+}
+
+.required {
+  color: #DC2626;
+  font-weight: 800;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-control {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-husk-surface);
+  color: var(--color-soil-slate);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input-control[type="number"],
+.input-control.font-mono {
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+.input-control:focus {
+  outline: none;
+  border-color: var(--color-emerald-accent);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.18);
+}
+
+/* Aksesibilitas: Cincin Fokus Tampak (WCAG 2.4.7 Focus Visible) */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.tab-btn:focus-visible,
+.btn:focus-visible,
+.btn-chip:focus-visible {
+  outline: 2px solid var(--color-emerald-accent) !important;
+  outline-offset: 2px !important;
+}
+
+.unit-suffix {
+  position: absolute;
+  right: 0.85rem;
+  color: var(--color-soil-sub);
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.field-hint {
+  display: block;
+  font-size: 0.775rem;
+  color: var(--color-soil-sub);
+  margin-top: 0.35rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.error-message {
+  display: block;
+  font-size: 0.75rem;
+  color: #DC2626;
+  font-weight: 600;
+  margin-top: 0.25rem;
+  min-height: 1rem;
+}
+
+/* ==========================================================================
+   6. TOMBOL & AKSI SISTEM
+   ========================================================================== */
+.form-actions {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 1.5rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.75rem 1.35rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-emerald-accent) 0%, var(--color-emerald-hover) 100%);
+  color: #FFFFFF;
+  border-color: #047857;
+  flex: 2;
+  box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--color-emerald-hover);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: var(--color-husk-muted);
+  color: var(--color-soil-slate);
+  border-color: var(--color-border-subtle);
+  flex: 1;
+}
+
+.btn-secondary:hover {
+  background-color: #E2EADE;
+  border-color: var(--color-border-strong);
+}
+
+.btn-success {
+  background-color: var(--color-forest-deep);
+  color: #FFFFFF;
+  border-color: var(--color-forest-dark);
+}
+
+.btn-success:hover {
+  background-color: var(--color-forest-surface);
+}
+
+.btn-outline {
+  background-color: var(--color-husk-surface);
+  border-color: var(--color-border-subtle);
+  color: var(--color-soil-slate);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-husk-muted);
+  border-color: var(--color-border-strong);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-sm {
+  font-size: 0.8125rem;
+  padding: 0.45rem 0.85rem;
+  min-height: 36px;
+}
+
+.btn-xs {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  min-height: 28px;
+  border-radius: var(--radius-xs);
+}
+
+/* ==========================================================================
+   7. HASIL TAKSASI & STATUS BANNER (MUTU SNI)
+   ========================================================================== */
+.result-placeholder {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  color: var(--color-soil-sub);
+}
+
+.placeholder-icon {
+  margin-bottom: 1rem;
+  color: var(--color-border-strong);
+}
+
+.result-placeholder p {
+  font-size: 0.875rem;
+  max-width: 340px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
+.result-content {
+  animation: resultReveal 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes resultReveal {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.grade-banner {
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  border: 2px solid transparent;
+  box-shadow: var(--shadow-sm);
+}
+
+.grade-banner.grade-premium {
+  background-color: var(--badge-premium-bg);
+  color: var(--badge-premium-text);
+  border-color: var(--badge-premium-border);
+}
+
+.grade-banner.grade-medium-1 {
+  background-color: var(--badge-med1-bg);
+  color: var(--badge-med1-text);
+  border-color: var(--badge-med1-border);
+}
+
+.grade-banner.grade-medium-2 {
+  background-color: var(--badge-med2-bg);
+  color: var(--badge-med2-text);
+  border-color: var(--badge-med2-border);
+}
+
+.grade-banner.grade-substandar {
+  background-color: var(--badge-sub-bg);
+  color: var(--badge-sub-text);
+  border-color: var(--badge-sub-border);
+}
+
+.grade-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.grade-pre {
+  font-size: 0.725rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+}
+
+.grade-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.grade-desc {
+  font-size: 0.825rem;
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* VERDICT BOX */
+.verdict-box {
+  background: var(--color-husk-muted);
+  border-radius: var(--radius-sm);
+  padding: 0.95rem 1.15rem;
+  font-size: 0.85rem;
+  margin: 1rem 0;
+  border-left: 4px solid var(--color-border-strong);
+  line-height: 1.5;
+  color: var(--color-soil-slate);
+}
+
+/* GAUGES AMBANG BATAS */
+.gauge-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.85rem;
+  margin: 1.25rem 0;
+}
+
+.gauge-item {
+  background: var(--color-husk-canvas);
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+}
+
+.gauge-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  margin-bottom: 0.4rem;
+  color: var(--color-soil-slate);
+}
+
+.gauge-val {
+  font-family: var(--font-mono);
+  font-weight: 800;
+}
+
+.gauge-track {
+  height: 8px;
+  background: var(--color-border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 0.45rem;
+}
+
+.gauge-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+.gauge-fill.green { background-color: var(--color-emerald-accent); }
+.gauge-fill.blue { background-color: #3B82F6; }
+.gauge-fill.amber { background-color: var(--color-gold-warm); }
+.gauge-fill.red { background-color: #EF4444; }
+
+.gauge-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.gauge-status.green { color: #065F46; }
+.gauge-status.blue { color: #1E40AF; }
+.gauge-status.amber { color: #92400E; }
+.gauge-status.red { color: #991B1B; }
+
+/* ==========================================================================
+   8. FINANCIAL TAKSASI ANCHOR BOX (.pricing-box)
+   ========================================================================== */
+.pricing-box {
+  background: linear-gradient(180deg, #FFFFFF 0%, var(--color-husk-muted) 100%);
+  border: 2px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+.pricing-box h4 {
+  font-size: 0.8125rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-forest-deep);
+  margin-bottom: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.price-table td {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--color-border-subtle);
+  color: var(--color-soil-slate);
+}
+
+.price-table .total-row td {
+  border-bottom: none;
+  border-top: 2px solid var(--color-border-strong);
+  padding-top: 0.85rem;
+  font-size: 1rem;
+}
+
+.text-right {
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+.text-danger {
+  color: #DC2626;
+  font-weight: 700;
+}
+
+.net-price {
+  font-family: var(--font-mono);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-forest-deep);
+}
+
+.simulation-note {
+  margin-top: 1rem;
+  background-color: #ECFDF5;
+  border: 1.5px solid #A7F3D0;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.825rem;
+  color: #065F46;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.sim-badge {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--color-emerald-accent);
+  letter-spacing: 0.03em;
+}
+
+/* ==========================================================================
+   9. MAKER & CHECKER WORKFLOW TABLES
+   ========================================================================== */
+.maker-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  .maker-section {
+    grid-template-columns: 400px 1fr;
+    align-items: start;
+  }
+}
+
+.table-responsive {
+  overflow-x: auto;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--color-border-subtle);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8375rem;
+  text-align: left;
+  background-color: var(--color-husk-surface);
+}
+
+.history-table th {
+  background-color: var(--color-husk-muted);
+  padding: 0.75rem 0.85rem;
+  font-weight: 700;
+  color: var(--color-forest-deep);
+  border-bottom: 1.5px solid var(--color-border-subtle);
+  white-space: nowrap;
+}
+
+.history-table td {
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid var(--color-border-subtle);
+  color: var(--color-soil-slate);
+  vertical-align: middle;
+}
+
+.history-table tr:hover td {
+  background-color: var(--color-husk-canvas);
+}
+
+.badge-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge-status.pending {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+
+.badge-status.verified {
+  background-color: #DCFCE7;
+  color: #065F46;
+  border: 1px solid #86EFAC;
+}
+
+.badge-status.rejected {
+  background-color: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #FECACA;
+}
+
+.badge-pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.25rem 0.55rem;
+  border-radius: var(--radius-xs);
+}
+
+.badge-pill.PREMIUM { background-color: #DCFCE7; color: #065F46; }
+.badge-pill.MEDIUM_I { background-color: #DBEAFE; color: #1E40AF; }
+.badge-pill.MEDIUM_II { background-color: #FEF3C7; color: #92400E; }
+.badge-pill.SUBSTANDAR { background-color: #FEE2E2; color: #991B1B; }
+
+/* MODAL OVERLAY */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(11, 25, 20, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.25rem;
+}
+
+.modal-card {
+  background: var(--color-husk-surface);
+  border-radius: var(--radius-lg);
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  border: 2px solid var(--color-border-strong);
+}
+
+.modal-header {
+  padding: 1.25rem 1.5rem;
+  background: var(--color-forest-deep);
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--color-emerald-accent);
+}
+
+.modal-header h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: #A7F3D0;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.modal-close:hover {
+  color: #FFFFFF;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+/* ==========================================================================
+   10. PRINT-FIRST A4 CERTIFICATE OF ANALYSIS (@media print)
+   ========================================================================== */
+.printable-certificate {
+  display: none;
+}
+
+@media print {
+  .no-print, header, nav, button, aside, .history-card, .preset-section, .form-actions {
+    display: none !important;
+  }
+
+  body {
+    background-color: #FFFFFF !important;
+    color: #000000 !important;
+    font-size: 10pt;
+    line-height: 1.35;
+  }
+
+  .printable-certificate {
+    display: block !important;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  .cert-page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm 18mm;
+    margin: 0 auto;
+    box-sizing: border-box;
+    background: #FFFFFF;
+    font-family: var(--font-sans);
+  }
+
+  .cert-kop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    gap: 12mm;
+    margin-bottom: 3mm;
+  }
+
+  .cert-kop-logo {
+    width: 18mm;
+    height: 18mm;
+    border: 2px solid #000000;
+    font-size: 14pt;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cert-kop-text h2 {
+    font-size: 13pt;
+    font-weight: 800;
+    margin-bottom: 1mm;
+  }
+
+  .cert-kop-text h3 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    margin-bottom: 1mm;
+  }
+
+  .cert-kop-text p {
+    font-size: 8.5pt;
+    color: #333333;
+  }
+
+  .cert-divider-double {
+    border-top: 3px solid #000000;
+    border-bottom: 1px solid #000000;
+    height: 3px;
+    margin-bottom: 5mm;
+  }
+}

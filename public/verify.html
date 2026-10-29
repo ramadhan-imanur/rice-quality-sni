@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifikasi Keaslian Lembar Taksasi Mutu & Harga Beras SNI 6128:2020</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .verify-container {
+      max-width: 860px;
+      margin: 2rem auto 4rem auto;
+      padding: 0 1.25rem;
+    }
+    .verify-hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .verify-hero h1 {
+      font-size: 1.85rem;
+      font-weight: 800;
+      color: var(--color-forest-deep);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.015em;
+    }
+    .verify-search-box {
+      background: var(--color-husk-surface);
+      padding: 1.5rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 2rem;
+      border: 1.5px solid var(--color-border-subtle);
+    }
+    .verify-search-form {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+    }
+    .verify-search-form input {
+      flex: 1;
+      min-width: 240px;
+    }
+    .status-banner {
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      border: 2px solid transparent;
+      box-shadow: var(--shadow-sm);
+    }
+    .status-banner.valid {
+      background-color: var(--badge-premium-bg);
+      border-color: var(--badge-premium-border);
+      color: var(--badge-premium-text);
+    }
+    .status-banner.tampered {
+      background-color: var(--badge-sub-bg);
+      border-color: var(--badge-sub-border);
+      color: var(--badge-sub-text);
+    }
+    .status-banner.not_found {
+      background-color: var(--badge-med2-bg);
+      border-color: var(--badge-med2-border);
+      color: var(--badge-med2-text);
+    }
+    .status-icon {
+      font-size: 2.5rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .status-title {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+      letter-spacing: -0.01em;
+    }
+    .cert-detail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .detail-card {
+      background: var(--color-husk-surface);
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--color-border-subtle);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow-sm);
+    }
+    .detail-card h3 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--color-forest-deep);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1.5px solid var(--color-husk-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .kv-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      font-size: 0.875rem;
+      border-bottom: 1px dashed var(--color-husk-muted);
+    }
+    .kv-label {
+      color: var(--color-soil-sub);
+      font-weight: 500;
+    }
+    .kv-val {
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--color-soil-slate);
+      text-align: right;
+    }
+    .param-check-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-top: 0.75rem;
+      background: var(--color-husk-surface);
+    }
+    .param-check-table th, .param-check-table td {
+      padding: 0.65rem 0.65rem;
+      border-bottom: 1px solid var(--color-border-subtle);
+      text-align: left;
+    }
+    .param-check-table th {
+      background: var(--color-husk-muted);
+      font-weight: 700;
+      color: var(--color-forest-deep);
+    }
+    .param-check-table td {
+      font-family: var(--font-mono);
+    }
+    .badge-eval {
+      display: inline-block;
+      padding: 0.25rem 0.55rem;
+      border-radius: var(--radius-xs);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 800;
+    }
+    .badge-eval.premium { background: var(--badge-premium-bg); color: var(--badge-premium-text); }
+    .badge-eval.medium_1 { background: var(--badge-med1-bg); color: var(--badge-med1-text); }
+    .badge-eval.medium_2 { background: var(--badge-med2-bg); color: var(--badge-med2-text); }
+    .badge-eval.substandar { background: var(--badge-sub-bg); color: var(--badge-sub-text); }
+    .crypto-stamp {
+      background: var(--color-husk-muted);
+      border: 1.5px solid var(--color-border-strong);
+      border-radius: var(--radius-sm);
+      padding: 0.85rem 1.15rem;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      word-break: break-all;
+      margin-top: 1.25rem;
+      color: var(--color-soil-slate);
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER APLIKASI -->
+  <header class="app-header no-print">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Portal Publik Cek Keaslian Lembar Taksasi Mutu Beras</h1>
+          <p class="subtitle">Verifikasi Mandiri Keaslian Dokumen Taksasi Acuan SNI 6128:2020 & Bapanas No. 67/2024</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <a href="index.html" class="pill pill-outline" style="text-decoration: none; color: #fff;">&larr; Kembali ke Aplikasi Utama</a>
+        <span class="pill pill-accent">Anti-Fraud Engine</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="verify-container">
+    <div class="verify-hero">
+      <h1>Pusat Verifikasi Dokumen Taksasi Beras</h1>
+      <p class="card-sub">Lindungi transaksi jual-beli gabah dan beras dari taksasi sepihak, sertifikat palsu, angka rekayasa, atau dokumen hasil editan.</p>
+    </div>
+
+    <!-- PENCARIAN NOMOR TAKSASI -->
+    <div class="verify-search-box">
+      <form id="verify-form" class="verify-search-form">
+        <input type="text" id="cert_query" class="input-control" placeholder="Masukkan Nomor Taksasi / Sertifikat (Contoh: TKS-20261016-001 atau SNI-...)" required>
+        <input type="text" id="sig_query" class="input-control" style="max-width: 220px;" placeholder="Kode Tanda Tangan (Opsional)">
+        <button type="submit" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          Periksa Database
+        </button>
+      </form>
+    </div>
+
+    <!-- HASIL VERIFIKASI -->
+    <div id="verify-result" style="display: none;">
+      <!-- BANNER STATUS -->
+      <div id="status-banner" class="status-banner">
+        <div class="status-icon" id="status-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div>
+          <div class="status-title" id="status-title">LEMBAR TAKSASI SAH & TERDAFTAR RESMI</div>
+          <p id="status-desc">Dokumen ini terdaftar secara sah dalam server basis data pengujian mutu & taksasi harga beras.</p>
+        </div>
+      </div>
+
+      <!-- KARTU RINCIAN DOKUMEN -->
+      <div id="cert-details-block" class="cert-detail-grid">
+        <!-- KARTU 1: IDENTITAS BATCH & PETANI -->
+        <div class="detail-card">
+          <h3>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            Identitas Pemilik & Batch Beras
+          </h3>
+          <div class="kv-row">
+            <span class="kv-label">Nama Pemilik/Petani</span>
+            <span class="kv-val" id="det-petani-nama">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">NIK Petani</span>
+            <span class="kv-val" id="det-petani-nik">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Varietas Padi</span>
+            <span class="kv-val" id="det-varietas">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Asal Lahan Sawah</span>
+            <span class="kv-val" id="det-asal-lahan">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Estimasi Tonase Batch</span>
+            <span class="kv-val" id="det-tonase">-</span>
+          </div>
+        </div>
+
+        <!-- KARTU 2: LEGALITAS & PENGESAHAN LAB -->
+        <div class="detail-card">
+          <h3>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+            Legalitas & Verifikator Lab
+          </h3>
+          <div class="kv-row">
+            <span class="kv-label">No. Lembar Taksasi</span>
+            <span class="kv-val" id="det-nomor-cert">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Tanggal Uji Lab</span>
+            <span class="kv-val" id="det-tgl-uji">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Analis Lab Penguji</span>
+            <span class="kv-val" id="det-analis-nama">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">NIP / NIM Analis</span>
+            <span class="kv-val" id="det-analis-nip">-</span>
+          </div>
+          <div class="kv-row">
+            <span class="kv-label">Lembaga Penguji</span>
+            <span class="kv-val" id="det-analis-instansi">-</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- KARTU 3: PARAMETER FISIK TERVERIFIKASI & HARGA RESMI -->
+      <div class="detail-card" style="margin-bottom: 1.5rem;">
+        <h3>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+          Parameter Mutu Fisik Asli Tercatat di Server (SNI 6128:2020)
+        </h3>
+        <table class="param-check-table">
+          <thead>
+            <tr>
+              <th>Parameter Mutu</th>
+              <th>Hasil Uji Lab Terkalibrasi</th>
+              <th>Batas Baku SNI</th>
+              <th>Klasifikasi Parameter</th>
+            </tr>
+          </thead>
+          <tbody id="det-param-tbody">
+            <!-- Render via JS -->
+          </tbody>
+        </table>
+
+        <!-- RINGKASAN KELAS MUTU & HARGA -->
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.25rem; padding: 1rem; background: #f8fafc; border-radius: var(--radius-sm); flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <span style="font-size: 0.8rem; color: var(--color-text-muted);">Hasil Klasifikasi Resmi:</span>
+            <div id="det-kelas-badge" style="font-size: 1.25rem; font-weight: 700;">MUTU PREMIUM</div>
+          </div>
+          <div>
+            <span style="font-size: 0.8rem; color: var(--color-text-muted);">Rekomendasi Harga Beli Bersih (Bapanas):</span>
+            <div id="det-harga-bersih" style="font-size: 1.25rem; font-weight: 700; color: #166534;">Rp 15.800 / kg</div>
+          </div>
+          <div>
+            <a id="btn-download-pdf" href="#" target="_blank" class="btn btn-success">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Unduh Salinan Asli PDF
+            </a>
+          </div>
+        </div>
+
+        <!-- TANDA TANGAN KRIPTOGRAFI -->
+        <div class="crypto-stamp">
+          <strong>Segel Integritas Kriptografi (HMAC-SHA256):</strong><br>
+          <span id="det-crypto-sig">-</span>
+        </div>
+
+        <p style="font-size:0.75rem; color:#64748b; margin-top:1.25rem; line-height:1.4; border-top:1px dashed #cbd5e1; padding-top:0.75rem;">
+          <strong>Pemberitahuan Hukum (Disclaimer):</strong> Dokumen ini merupakan Lembar Hasil Taksasi Mutu & Harga Beras untuk kepentingan pra-inspeksi pasar dan perlindungan harga wajar petani, bukan sertifikat kesesuaian resmi yang diterbitkan Lembaga Sertifikasi Produk (LSPro) terakreditasi KAN sesuai ketentuan UU No. 20 Tahun 2014.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const form = document.getElementById("verify-form");
+      const inputCert = document.getElementById("cert_query");
+      const inputSig = document.getElementById("sig_query");
+      const resContainer = document.getElementById("verify-result");
+
+      // Auto-check jika terdapat query param di URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const urlId = urlParams.get("id");
+      const urlSig = urlParams.get("sig");
+      if (urlId) {
+        inputCert.value = urlId;
+        if (urlSig) inputSig.value = urlSig;
+        doVerify(urlId, urlSig || "");
+      }
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const certId = inputCert.value.trim();
+        const sig = inputSig.value.trim();
+        if (certId) {
+          doVerify(certId, sig);
+        }
+      });
+
+      function doVerify(certId, sig) {
+        let apiUrl = `/api/verify?id=${encodeURIComponent(certId)}`;
+        if (sig) apiUrl += `&sig=${encodeURIComponent(sig)}`;
+
+        fetch(apiUrl)
+          .then(async (res) => {
+            const data = await res.json();
+            renderVerification(data, res.ok);
+          })
+          .catch((err) => {
+            alert("Gagal terhubung ke peladen API: " + err.message);
+          });
+      }
+
+      function renderVerification(data, isHttpOk) {
+        resContainer.style.display = "block";
+        const banner = document.getElementById("status-banner");
+        const icon = document.getElementById("status-icon");
+        const title = document.getElementById("status-title");
+        const desc = document.getElementById("status-desc");
+        const detailBlock = document.getElementById("cert-details-block");
+
+        banner.className = "status-banner";
+
+        if (data.valid && data.certificate) {
+          banner.classList.add("valid");
+          icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+          title.textContent = "LEMBAR TAKSASI SAH & TERDAFTAR DI DATABASE";
+          desc.textContent = data.message;
+          detailBlock.style.display = "grid";
+
+          const c = data.certificate;
+          document.getElementById("det-petani-nama").textContent = c.petani_nama || "-";
+          const rawNik = c.petani_nik || "";
+          document.getElementById("det-petani-nik").textContent = rawNik ? (rawNik.length >= 10 && !rawNik.includes("*") ? rawNik.substring(0, 6) + "******" + rawNik.substring(12) : rawNik) : "-";
+          document.getElementById("det-varietas").textContent = c.varietas_padi || "-";
+          document.getElementById("det-asal-lahan").textContent = c.asal_lahan || "-";
+          document.getElementById("det-tonase").textContent = Number(c.tonase_kg || 0).toLocaleString("id-ID") + " kg";
+
+          document.getElementById("det-nomor-cert").textContent = c.nomor_sertifikat;
+          document.getElementById("det-tgl-uji").textContent = c.tanggal_uji;
+          document.getElementById("det-analis-nama").textContent = c.analis_nama;
+          document.getElementById("det-analis-nip").textContent = c.analis_nip;
+          document.getElementById("det-analis-instansi").textContent = c.analis_instansi;
+
+          document.getElementById("det-kelas-badge").textContent = "MUTU " + (c.label_mutu || c.kelas_mutu).toUpperCase();
+          document.getElementById("det-harga-bersih").textContent = "Rp " + Number(c.harga_bersih).toLocaleString("id-ID") + " / kg";
+          document.getElementById("det-crypto-sig").textContent = c.signature_hmac;
+
+          document.getElementById("btn-download-pdf").href = `/api/certificates/${encodeURIComponent(c.nomor_sertifikat)}/download`;
+
+          // Render Parameter Table
+          const tbody = document.getElementById("det-param-tbody");
+          tbody.innerHTML = `
+            <tr>
+              <td>Kadar Air</td>
+              <td><strong>${Number(c.kadar_air).toFixed(2)} %</strong></td>
+              <td>Maks. 14.00 %</td>
+              <td><span class="badge-eval ${c.kadar_air <= 14.0 ? 'premium' : 'substandar'}">${c.kadar_air <= 14.0 ? 'Lulus SNI' : 'Kena Penalti'}</span></td>
+            </tr>
+            <tr>
+              <td>Butir Patah</td>
+              <td><strong>${Number(c.butir_patah).toFixed(2)} %</strong></td>
+              <td>Prem &le;15% | Med I &le;20% | Med II &le;25%</td>
+              <td><span class="badge-eval ${c.butir_patah <= 15 ? 'premium' : (c.butir_patah <= 20 ? 'medium_1' : (c.butir_patah <= 25 ? 'medium_2' : 'substandar'))}">${c.butir_patah <= 15 ? 'Premium' : (c.butir_patah <= 20 ? 'Medium I' : (c.butir_patah <= 25 ? 'Medium II' : 'Substandar'))}</span></td>
+            </tr>
+            <tr>
+              <td>Butir Menir</td>
+              <td><strong>${Number(c.butir_menir).toFixed(2)} %</strong></td>
+              <td>Prem &le;0.5% | Med I &le;2% | Med II &le;5%</td>
+              <td><span class="badge-eval ${c.butir_menir <= 0.5 ? 'premium' : (c.butir_menir <= 2.0 ? 'medium_1' : (c.butir_menir <= 5.0 ? 'medium_2' : 'substandar'))}">${c.butir_menir <= 0.5 ? 'Premium' : (c.butir_menir <= 2.0 ? 'Medium I' : (c.butir_menir <= 5.0 ? 'Medium II' : 'Substandar'))}</span></td>
+            </tr>
+            <tr>
+              <td>Benda Asing</td>
+              <td><strong>${Number(c.benda_asing).toFixed(4)} %</strong></td>
+              <td>Prem &le;0.01% | Med I &le;0.02% | Med II &le;0.05%</td>
+              <td><span class="badge-eval ${c.benda_asing <= 0.01 ? 'premium' : (c.benda_asing <= 0.02 ? 'medium_1' : (c.benda_asing <= 0.05 ? 'medium_2' : 'substandar'))}">${c.benda_asing <= 0.01 ? 'Premium' : (c.benda_asing <= 0.02 ? 'Medium I' : (c.benda_asing <= 0.05 ? 'Medium II' : 'Substandar'))}</span></td>
+            </tr>
+          `;
+        } else if (data.status === "TAMPERED") {
+          banner.classList.add("tampered");
+          icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>';
+          title.textContent = "PERINGATAN! DOKUMEN DIDUGA TELAH DIMANIPULASI";
+          desc.textContent = data.message;
+          detailBlock.style.display = "none";
+        } else {
+          banner.classList.add("not_found");
+          icon.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+          title.textContent = "LEMBAR TAKSASI TIDAK TERDAFTAR";
+          desc.textContent = data.message || "Nomor taksasi tidak ditemukan dalam arsip database resmi.";
+          detailBlock.style.display = "none";
+        }
+
+        window.scrollTo({ top: 300, behavior: "smooth" });
+      }
+    })();
+  </script>
+</body>
+</html>
